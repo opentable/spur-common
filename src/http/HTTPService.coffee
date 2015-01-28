@@ -5,6 +5,7 @@ module.exports = (superagent, Promise, SpurErrors)->
   Request::promise = ->
     return new Promise (resolve, reject)=>
       Request::end.call @, (err, res)->
+
         try
 
           if err
