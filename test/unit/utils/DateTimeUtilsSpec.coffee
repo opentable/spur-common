@@ -7,9 +7,6 @@ describe "DateTimeUtils", ->
   afterEach ()->
     @clock.restore()
 
-  it "should exist", ->
-    expect(@DateTimeUtils).to.exist
-
   it "now()", ->
     expect(@DateTimeUtils.now())
       .to.deep.equal @moment()

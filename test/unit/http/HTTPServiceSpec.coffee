@@ -12,9 +12,6 @@ describe "HTTPService", ->
 
   afterEach ()->
 
-  it "should exist", ->
-    expect(@HTTPService).to.exist
-
   it "success", ->
     nock("http://someurl")
       .get("/")

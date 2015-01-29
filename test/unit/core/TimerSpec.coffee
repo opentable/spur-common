@@ -5,9 +5,6 @@ describe "Timer", ->
 
   afterEach ()->
 
-  it "should exist", ->
-    expect(@Timer).to.exist
-
   it "test timer", ->
     clock = sinon.useFakeTimers()
     timer = new @Timer().start()
