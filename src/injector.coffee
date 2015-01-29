@@ -5,18 +5,16 @@ module.exports = ()->
 
   ioc = spur.create("spur-common")
 
-  ioc.registerLibraries {
-    "_"               : "lodash"
-    "Promise"         : "bluebird"
-    "fs"              : "fs"
-    "path"            : "path"
-    "SpurErrors"      : "spur-errors"
-    "winston"         : "winston"
-    "moment"          : "moment"
-    "superagent"      : "superagent"
-  }
-
   ioc.registerDependencies {
+    "_"               : require "lodash"
+    "Promise"         : require "bluebird"
+    "fs"              : require "fs"
+    "path"            : require "path"
+    "SpurErrors"      : require "spur-errors"
+    "winston"         : require "winston"
+    "moment"          : require "moment"
+    "superagent"      : require "superagent"
+
     "console"         : console
     "nodeProcess"     : process
   }
