@@ -24,6 +24,7 @@ module.exports = ()->
   ioc.registerFolders __dirname, [
     "core"
     "http"
+    "utils"
   ]
 
   ioc
