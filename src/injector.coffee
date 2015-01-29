@@ -23,7 +23,9 @@ module.exports = ()->
 
   ioc.registerFolders __dirname, [
     "core"
+    "fixtures"
     "http"
+    "logging"
     "promisify"
     "utils"
   ]
