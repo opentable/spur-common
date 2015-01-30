@@ -2,35 +2,65 @@ nock = require "nock"
 
 describe "HTTPService", ->
 
-  beforeEach ()->
+  beforeEach ->
+    injector().inject (@HTTPService, @HTTPTiming, @Timer, @HTTPPlugin)=>
+
+    @Timer.mockDuration(33)
+
     nock.disableNetConnect()
-    injector()
-    .addDependency("config", {
-        useMockLogger:true
-      }, true)
-    .inject (@HTTPService, @Timer, @SpurErrors)=>
 
-  afterEach ()->
+  afterEach ->
+    nock.cleanAll()
 
-  it "success", ->
+  it "should exist", ->
+    expect(@HTTPService).to.exist
+
+  it "http success", (done)->
     nock("http://someurl")
       .get("/")
       .reply(200, {
         message:"response"
       })
 
-    @HTTPService.get("http://someurl/").promise()
-      .then (res)=>
-        expect(res.status).to.equal 200
-        expect(res.body).to.deep.equal {
-          message:"response"
-        }
+    @HTTPService.setGlobalPlugins(@HTTPTiming)
 
-  it "not found", ->
-    nock("http://somebadurl")
+    logs = []
+
+    class HTTPLogging extends @HTTPPlugin
+      start:()->
+      end:()->
+        logs.push @request.name,@request.url
+
+    @HTTPService
+      .get("http://someurl")
+      .named("LoginService")
+      .plugin(HTTPLogging)
+      .promise().then (res)->
+        expect(res.request.name).to.equal "LoginService"
+        expect(res.request.duration).to.equal 33
+        expect(logs).to.deep.equal [ 'LoginService', 'http://someurl' ]
+        done()
+
+  it "http error",(done)->
+    nock("http://someurl")
       .get("/")
-      .reply(404)
+      .reply(400, {
+        message:"response"
+      })
+    logs = []
 
-    @HTTPService.get("http://somebadurl/").promise()
-      .catch (e)=>
-        expect(e instanceof @SpurErrors.NotFoundError)
+    class HTTPLogging extends @HTTPPlugin
+      start:()->
+      end:()->
+        logs.push @request.name,@request.url, @request.error.data.text
+
+    @HTTPService
+      .get("http://someurl")
+      .named("LoginService")
+      .plugin(HTTPLogging)
+      .promise().catch (e)->
+        expect(e.statusCode).to.equal 400
+        expect(logs).to.deep.equal [
+          'LoginService', 'http://someurl', '{"message":"response"}'
+        ]
+        done()

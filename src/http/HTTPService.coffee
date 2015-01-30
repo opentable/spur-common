@@ -1,28 +1,42 @@
-module.exports = (superagent, Promise, SpurErrors)->
-
+module.exports = (superagent, Promise, _, SpurErrors)->
   Request = superagent.Request
 
+  superagent.globalPlugins = []
+
+  Request::plugin = (plugin)->
+    (@_plugins ?= []).push(plugin)
+    @
+  Request::named = (@name)-> @
+
+  Request::getDefaultName = ->
+    return @url.match(/\/\/(.+)\/?/)[1].replace(/\./g, "_")
+
   Request::promise = ->
-    return new Promise (resolve, reject)=>
-      Request::end.call @, (err, res)->
+    self = this
+    self.name ?= @getDefaultName()
+    @_plugins = (@_plugins or []).concat(superagent.globalPlugins)
+    @_pluginInstances = _.compact _.map @_plugins, (p)->
+      p.start(self)
 
-        try
+    return new Promise (resolve, reject)->
+      Request::end.call self, (err, res)->
+        self.response = res
+        if err
+          self.error = SpurErrors.InternalServerError.create("HTTP Error", err)
+        else if res.status >= 400
+          self.error = SpurErrors.errorByStatusCode(res.status)?.create()
+          unless self.error
+            self.error = SpurErrors.InternalServerError("HTTP Error")
+          self.error.setData({text:res.text})
 
-          if err
-            return reject(SpurErrors.InternalServerError.create("HTTP Error", err))
-          else if res.status >= 400
-            error = SpurErrors.errorByStatusCode(res.status)?.create()
-            unless error
-              error = SpurErrors.InternalServerError("HTTP Error")
-            error.setData({text:res.text})
-            return reject(error)
+        if self.error
+          reject(self.error)
+        else
+          resolve(res)
+        _.invoke(self._pluginInstances, "end")
 
-          return resolve(res)
-
-        catch e
-          return reject(e)
-
-  Request::promiseBody = -> @promise().get("body")
-  Request::promiseText = -> @promise().get("text")
+  superagent.setGlobalPlugins = (@globalPlugins)->
 
   superagent
+
+
