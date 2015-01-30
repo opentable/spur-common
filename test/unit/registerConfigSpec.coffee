@@ -37,5 +37,6 @@ describe "registerConfig", ->
     ioc = injector()
     configPath = path.join(__dirname, "../fixtures/config2")
     expect(->
+      console.log "===== EXPECTED ERROR BELOW ====="
       registerConfig(ioc, configPath, "alphaConfig")
     ).to.throw()

@@ -14,7 +14,7 @@ module.exports = function(ioc, folderPath, configName){
 
     ioc.registerDependencies(dependencies);
   } catch (e){
-    console.log("Error registering config", e)
+    console.error("Error registering config", e)
     throw e
   }
 };
