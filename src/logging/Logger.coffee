@@ -16,4 +16,4 @@ module.exports = (BaseDelegate, winston)->
     #TODO: evaluate if this should be in common
     useWinston:()->
       winston.cli()
-      @delegate = winston
+      @use(winston)
