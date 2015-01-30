@@ -11,27 +11,28 @@ module.exports = (_, console)->
       @useConsole()
 
     callDelegate:(methodName, args)->
-      return unless @delegate
-      if _.isFunction(@delegate[methodName])
-        @delegate[methodName].apply(@delegate, args)
-      else if _.isFunction(@delegate)
-        @delegate(methodName, args)
+      _.each @delegates, (delegate)=>
+        if _.isFunction(delegate[methodName])
+          delegate[methodName].apply(delegate, args)
+        else if _.isFunction(delegate)
+          delegate.call(@,methodName, args)
 
     useNoop:()->
-      @delegate = null
+      @delegates = []
 
     useConsole:()->
-      @delegate = @consoleDelegate
+      @delegates = [@consoleDelegate]
 
     consoleDelegate:(methodName, args)=>
       prefix = @constructor.name + "##{methodName}: "
       console.log.apply(console, [prefix].concat(args))
 
     useRecorder:()->
-      @delegate = @recorderDelegate
+      @delegates = [@recorderDelegate]
 
     recorderDelegate:(methodName, args)=>
       @recorded ?= {}
       (@recorded[methodName] ?= []).push(args)
 
-    use:(@delegate)=>
+    use:(delegate)=>
+      @delegates = [delegate]

@@ -2,7 +2,7 @@ registerConfig = require "../../registerConfig"
 path           = require "path"
 
 
-describe.only "registerConfig", ->
+describe "registerConfig", ->
 
   beforeEach ->
 

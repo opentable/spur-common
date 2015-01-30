@@ -9,20 +9,20 @@ describe "BaseDelegate", ->
       .addDependency("console", mockConsole, true)
       .inject (@BaseDelegate)=>
 
-
-  it "should exist", ->
-    expect(@BaseDelegate).to.exist
-
-  it "base delegate test", ->
-
-    class SomeDelegate extends @BaseDelegate
+    class @SomeDelegate extends @BaseDelegate
 
       constructor:()->
         @supportsMethods [
           "log", "debug"
         ]
 
-    delegate = new SomeDelegate()
+
+  it "should exist", ->
+    expect(@BaseDelegate).to.exist
+
+  it "base delegate test", ->
+
+    delegate = new @SomeDelegate()
     delegate.log("hi")
     delegate.debug("hello")
 
@@ -43,3 +43,21 @@ describe "BaseDelegate", ->
     delegate.debug("bar")
     expect(@delegateLog).to.equal "foo"
     expect(@delegateDebug).to.equal "bar"
+
+  it "multiple delegates", ->
+
+    delegate = new @SomeDelegate()
+    delegate.delegates = [
+      delegate.consoleDelegate
+      delegate.consoleDelegate
+      delegate.consoleDelegate
+    ]
+    delegate.log("foo")
+    expect(@logs).to.deep.equal [
+      [ 'SomeDelegate#log: ', 'foo' ],
+      [ 'SomeDelegate#log: ', 'foo' ],
+      [ 'SomeDelegate#log: ', 'foo' ]
+    ]
+
+
+
