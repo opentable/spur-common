@@ -35,6 +35,9 @@ module.exports = (superagent, Promise, _, SpurErrors)->
           resolve(res)
         _.invoke(self._pluginInstances, "end")
 
+  Request::promiseBody = -> @promise().get("body")
+  Request::promiseText = -> @promise().get("text")
+
   superagent.setGlobalPlugins = (@globalPlugins)->
 
   superagent
