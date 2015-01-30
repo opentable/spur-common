@@ -1,8 +1,8 @@
 module.exports = (nodeProcess, Logger)->
 
-  new class UncaughtHander
+  new class UncaughtHlander
 
     listen:()->
       nodeProcess.on 'uncaughtException', (err)->
-        Logger.info(err)
+        Logger.error(err)
         nodeProcess.exit(0)

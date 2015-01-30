@@ -3,7 +3,7 @@ nock = require "nock"
 describe "HTTPService", ->
 
   beforeEach ->
-    injector().inject (@HTTPService, @HTTPTiming, @Timer, @HTTPPlugin)=>
+    injector().inject (@HTTPService, @Timer, @HTTPPlugin, @HTTPTiming)=>
 
     @Timer.mockDuration(33)
 
@@ -22,7 +22,7 @@ describe "HTTPService", ->
         message:"response"
       })
 
-    @HTTPService.setGlobalPlugins(@HTTPTiming)
+    @HTTPService.setGlobalPlugins([@HTTPTiming])
 
     logs = []
 
