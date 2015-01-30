@@ -36,13 +36,13 @@
   "homepage": "https://github.com/opentable/spur-common",
   "dependencies": {
     "coffee-script": "^1.8.0",
+    "spur-ioc": "latest",
+    "spur-errors": "latest",
     "lodash": "^3.0.0",
-    "spur-errors": "0.0.3",
     "bluebird": "^2.9.3",
     "winston": "^0.8.3",
-    "moment": "^2.9.0",
     "superagent": "^0.21.0",
-    "spur-ioc": "0.0.9"
+    "moment-timezone": "^0.3.0"
   },
   "devDependencies": {
     "sinon-chai": "^2.6.0",

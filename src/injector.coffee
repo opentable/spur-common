@@ -12,7 +12,7 @@ module.exports = ()->
     "path"            : require "path"
     "SpurErrors"      : require "spur-errors"
     "winston"         : require "winston"
-    "moment"          : require "moment"
+    "moment"          : require "moment-timezone"
     "superagent"      : require "superagent"
 
     "console"         : console
