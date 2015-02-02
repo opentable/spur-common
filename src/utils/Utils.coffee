@@ -1,4 +1,4 @@
-module.exports = (_, Promise)->
+module.exports = (_, Promise, fsPromise)->
 
 
   new class Utils
@@ -27,3 +27,15 @@ module.exports = (_, Promise)->
       for fn in fns
         queue = queue.then(fn)
       queue
+
+    readFile: (filePath) =>
+      fsPromise
+        .readFileAsync(filePath, {encoding: "utf8"})
+
+    readJsonFile: (filePath) =>
+      readFile(filePath)
+        .then (data)->
+          try
+            return JSON.parse(data)
+          catch err
+            Promise.reject new Error("Error Parsing JSON: #{err}")

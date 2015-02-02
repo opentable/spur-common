@@ -1,7 +1,7 @@
 describe "Utils", ->
 
   beforeEach ->
-    injector().inject (@Utils, @Promise)=>
+    injector().inject (@Utils, @Promise, @path)=>
 
   it "prop()", ->
     ob = {k:"v"}
@@ -62,3 +62,22 @@ describe "Utils", ->
       expect(str).to.equal "12345"
       done()
 
+  it 'readFile()', ->
+    filePath = @path.join(__dirname, "../../", "fixtures/data/readFileTest.json")
+    @Utils.readFile(filePath)
+      .done (data)->
+        expect(data).to.equal('{\n  "what": "test",\n  "year": 2015\n}\n')
+
+  it.skip 'readJsonFile()', ->
+    filePath = @path.join(__dirname, "../../", "fixtures/data/readFileTest.json")
+    @Utils.readJsonFile(filePath)
+      .done (data)->
+        expect(data.what).to.equal("test")
+        expect(data.year).to.equal(2015)
+
+  it.skip 'readJsonFile() with JSON parse error', (done)->
+    filePath = @path.join(__dirname, "../../", "fixtures/data/readFileWithError.json")
+    @Utils.readJsonFile(filePath)
+      .error (error)->
+          expect(error.message).to.contain("Error Parsing JSON2")
+      .finally -> done()
