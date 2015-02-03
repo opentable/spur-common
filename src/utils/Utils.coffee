@@ -33,7 +33,7 @@ module.exports = (_, Promise, fsPromise)->
         .readFileAsync(filePath, {encoding: "utf8"})
 
     readJsonFile: (filePath) =>
-      readFile(filePath)
+      @readFile(filePath)
         .then (data)->
           try
             return JSON.parse(data)
