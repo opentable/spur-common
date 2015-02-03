@@ -1,6 +1,6 @@
 {
   "name": "spur-common",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "Common node library that is implemented through the use of spur-ioc and bluebird promises.",
   "main": "index.js",
   "scripts": {

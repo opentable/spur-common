@@ -17,6 +17,7 @@ module.exports = ()->
 
     "console"         : console
     "nodeProcess"     : process
+    "JSON"            : JSON
   }
 
   ioc.registerFolders __dirname, [

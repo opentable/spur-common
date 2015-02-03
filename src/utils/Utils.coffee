@@ -1,4 +1,4 @@
-module.exports = (_, Promise, fsPromise)->
+module.exports = (_, Promise, fsPromise, JSON)->
 
 
   new class Utils
