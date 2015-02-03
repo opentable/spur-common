@@ -1,4 +1,5 @@
 nock = require "nock"
+_    = require "lodash"
 
 describe "HTTPService", ->
 
@@ -8,6 +9,10 @@ describe "HTTPService", ->
     @Timer.mockDuration(33)
 
     nock.disableNetConnect()
+
+    @containsText = (text, arr)->
+      _.every arr, (expectedText)->
+        text.indexOf(expectedText) > -1
 
   afterEach ->
     nock.cleanAll()
@@ -63,4 +68,25 @@ describe "HTTPService", ->
         expect(logs).to.deep.equal [
           'LoginService', 'http://someurl', '{"message":"response"}'
         ]
+        done()
+
+
+  it "http append file", (done)->
+    nock("http://someurl")
+      .filteringRequestBody((@requestBody)=>)
+      .post("/")
+      .reply(200)
+
+    @HTTPService.post("http://someurl/")
+      .appendFile("file", new Buffer("hello world"), {
+        filename:"hello.json"
+        contentType:"application/json"
+      }).promise().then ()=>
+
+        valid = @containsText @requestBody, [
+          'Content-Disposition: form-data; name="file"; filename="hello.json"'
+          'Content-Type: application/json'
+          'hello world'
+        ]
+        expect(valid).to.equal true
         done()

@@ -14,6 +14,7 @@ module.exports = ()->
     "winston"         : require "winston"
     "moment"          : require "moment-timezone"
     "superagent"      : require "superagent"
+    "FormData"        : require "form-data"
 
     "console"         : console
     "nodeProcess"     : process

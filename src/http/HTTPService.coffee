@@ -1,4 +1,4 @@
-module.exports = (superagent, Promise, _, SpurErrors)->
+module.exports = (superagent, Promise, _, SpurErrors, FormData)->
   Request = superagent.Request
 
   superagent.globalPlugins = []
@@ -34,6 +34,11 @@ module.exports = (superagent, Promise, _, SpurErrors)->
         else
           resolve(res)
         _.invoke(self._pluginInstances, "end")
+
+  Request::appendFile = (name, contents, params)->
+    @_formData ?= new FormData()
+    @_formData.append(name, contents, params)
+    @
 
   Request::promiseBody = -> @promise().get("body")
   Request::promiseText = -> @promise().get("text")
