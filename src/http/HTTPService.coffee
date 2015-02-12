@@ -27,7 +27,14 @@ module.exports = (superagent, Promise, _, SpurErrors, FormData)->
           self.error = SpurErrors.errorByStatusCode(res.status)?.create()
           unless self.error
             self.error = SpurErrors.InternalServerError("HTTP Error")
-          self.error.setData({text:res.text})
+
+          errorResponse =
+            if _.isEmpty(res.body)
+              res.text
+            else
+              res.body
+
+          self.error.setData(errorResponse)
 
         if self.error
           reject(self.error)

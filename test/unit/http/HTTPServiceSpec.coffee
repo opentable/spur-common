@@ -57,7 +57,7 @@ describe "HTTPService", ->
     class HTTPLogging extends @HTTPPlugin
       start:()->
       end:()->
-        logs.push @request.name,@request.url, @request.error.data.text
+        logs.push @request.name,@request.url, @request.error.data
 
     @HTTPService
       .get("http://someurl")
@@ -65,8 +65,9 @@ describe "HTTPService", ->
       .plugin(HTTPLogging)
       .promise().catch (e)->
         expect(e.statusCode).to.equal 400
+        expect(e.data).to.deep.equal {message:"response"}
         expect(logs).to.deep.equal [
-          'LoginService', 'http://someurl', '{"message":"response"}'
+          'LoginService', 'http://someurl', {"message":"response"}
         ]
         done()
 
