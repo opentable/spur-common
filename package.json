@@ -1,6 +1,6 @@
 {
   "name": "spur-common",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Common node library that is implemented through the use of spur-ioc and bluebird promises.",
   "main": "index.js",
   "scripts": {
@@ -44,7 +44,8 @@
     "superagent": "^0.21.0",
     "moment-timezone": "^0.3.0",
     "spur-config": "0.0.1",
-    "form-data": "^0.2.0"
+    "form-data": "^0.2.0",
+    "joi": "^5.1.0"
   },
   "devDependencies": {
     "sinon-chai": "^2.6.0",
