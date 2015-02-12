@@ -18,15 +18,15 @@ module.exports = (superagent, Promise, _, SpurErrors, FormData)->
     @_pluginInstances = _.compact _.map @_plugins, (p)->
       p.start(self)
 
-    return new Promise (resolve, reject)->
-      Request::end.call self, (err, res)->
+    return new Promise (resolve, reject)=>
+      Request::end.call self, (err, res)=>
         self.response = res
         if err
-          self.error = SpurErrors.InternalServerError.create("HTTP Error", err)
+          self.error = SpurErrors.InternalServerError.create("HTTP Error: #{@method} #{@url} #{err.message}", err)
         else if res.status >= 400
           self.error = SpurErrors.errorByStatusCode(res.status)?.create()
           unless self.error
-            self.error = SpurErrors.InternalServerError("HTTP Error")
+            self.error = SpurErrors.InternalServerError("HTTP Error: #{@method} #{@url}")
 
           errorResponse =
             if _.isEmpty(res.body)
