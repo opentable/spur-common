@@ -50,6 +50,21 @@ module.exports = (superagent, Promise, _, SpurErrors, FormData)->
   Request::promiseBody = -> @promise().get("body")
   Request::promiseText = -> @promise().get("text")
 
+  Request::parseBinary = ->
+    @parse((res, fn)->
+      res.data = ''
+      res.setEncoding("binary")
+      res.on 'data', (chunk)->
+        res.data += chunk.toString("binary")
+      res.on 'end', ->
+        fn null, new Buffer(res.data, 'binary')
+    ).buffer(true)
+
+  Request:setFields = (fields)->
+    for k,v of fields
+      @field(k,v)
+    @
+
   superagent.setGlobalPlugins = (@globalPlugins)->
 
   superagent
