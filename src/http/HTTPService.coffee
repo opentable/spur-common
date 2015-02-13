@@ -60,7 +60,7 @@ module.exports = (superagent, Promise, _, SpurErrors, FormData)->
         fn null, new Buffer(res.data, 'binary')
     ).buffer(true)
 
-  Request:setFields = (fields)->
+  Request::setFields = (fields)->
     for k,v of fields
       @field(k,v)
     @
