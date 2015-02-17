@@ -72,6 +72,32 @@ describe "HTTPService", ->
         done()
 
 
+  it "unknown http error",(done)->
+    nock("http://someurl")
+      .get("/")
+      .reply(423, {
+        message:"response"
+      })
+    logs = []
+
+    class HTTPLogging extends @HTTPPlugin
+      start:()->
+      end:()->
+        logs.push @request.name,@request.url, @request.error.data
+
+    @HTTPService
+      .get("http://someurl")
+      .named("LoginService")
+      .plugin(HTTPLogging)
+      .promise().catch (e)->
+        expect(e.statusCode).to.equal 423
+        expect(e.data).to.deep.equal {message:"response"}
+        expect(e.message).to.equal "HTTP Error: 423 GET http://someurl"
+        expect(logs).to.deep.equal [
+          'LoginService', 'http://someurl', {"message":"response"}
+        ]
+        done()
+
   it "http append file", (done)->
     nock("http://someurl")
       .filteringRequestBody((@requestBody)=>)

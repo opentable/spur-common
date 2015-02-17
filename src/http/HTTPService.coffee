@@ -26,7 +26,8 @@ module.exports = (superagent, Promise, _, SpurErrors, FormData)->
         else if res.status >= 400
           self.error = SpurErrors.errorByStatusCode(res.status)?.create()
           unless self.error
-            self.error = SpurErrors.InternalServerError("HTTP Error: #{@method} #{@url}")
+            self.error = SpurErrors.BaseError.create("HTTP Error: #{res.status} #{@method} #{@url}")
+              .setStatusCode(res.status)
 
           errorResponse =
             if _.isEmpty(res.body)
