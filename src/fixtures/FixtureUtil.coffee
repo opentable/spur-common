@@ -21,6 +21,8 @@ module.exports = (path, Promise, fsPromise, FixtureCache, Logger)->
 
       filePath = path.join(@fixturesPath, "#{name}.json")
 
+      Logger.info "Using file fixture: #{filePath}"
+
       fsPromise
         .readFileAsync(filePath, {encoding: 'utf8'})
         .catch (err)->
