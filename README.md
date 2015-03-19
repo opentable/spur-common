@@ -84,7 +84,7 @@ module.exports = function(){
   ]);
 
   // THIS IS THE IMPORTANT PART: Merge the spur-common dependencies to your local container
-  ioc.merge(spurCommon)
+  ioc.merge(spurCommon())
 
   return ioc;
 }
