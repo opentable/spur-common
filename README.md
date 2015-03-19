@@ -68,11 +68,6 @@ module.exports = function(){
   // define a  new injector
   var ioc = spur.create("demo");
 
-  // register node modules to be injected
-  ioc.registerLibraries({
-    ...
-  });
-
   // register already constructed objects such as globals
   ioc.registerDependencies({
     ...
