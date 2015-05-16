@@ -17,6 +17,7 @@ module.exports = (superagent, Promise, _, SpurErrors, FormData)->
   Request::promise = ->
     self = this
     self.name ?= @getDefaultName()
+    self.tags ?= {}
     @_plugins = (@_plugins or []).concat(superagent.globalPlugins)
     @_pluginInstances = _.compact _.map @_plugins, (p)->
       p.start(self)
