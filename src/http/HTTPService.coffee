@@ -9,7 +9,7 @@ module.exports = (superagent, Promise, _, SpurErrors, FormData)->
 
   Request::named = (@name)-> @
 
-  Request::tags = (@tags = {})-> @
+  Request::tagged = (@tags = {})-> @
 
   Request::getDefaultName = ->
     return @url.match(/\/\/(.+)\/?/)[1].replace(/\./g, "_")
