@@ -6,7 +6,10 @@ module.exports = (superagent, Promise, _, SpurErrors, FormData)->
   Request::plugin = (plugin)->
     (@_plugins ?= []).push(plugin)
     @
+
   Request::named = (@name)-> @
+
+  Request::tags = (@tags = {})-> @
 
   Request::getDefaultName = ->
     return @url.match(/\/\/(.+)\/?/)[1].replace(/\./g, "_")
@@ -14,6 +17,7 @@ module.exports = (superagent, Promise, _, SpurErrors, FormData)->
   Request::promise = ->
     self = this
     self.name ?= @getDefaultName()
+    self.tags ?= {}
     @_plugins = (@_plugins or []).concat(superagent.globalPlugins)
     @_pluginInstances = _.compact _.map @_plugins, (p)->
       p.start(self)
@@ -69,5 +73,3 @@ module.exports = (superagent, Promise, _, SpurErrors, FormData)->
   superagent.setGlobalPlugins = (@globalPlugins)->
 
   superagent
-
-
