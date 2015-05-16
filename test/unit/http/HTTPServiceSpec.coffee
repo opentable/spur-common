@@ -39,7 +39,7 @@ describe "HTTPService", ->
     @HTTPService
       .get("http://someurl")
       .named("LoginService")
-      .tags({endpoint: "EndpointName", tag2: "Some tag value"})
+      .tagged({endpoint: "EndpointName", tag2: "Some tag value"})
       .plugin(HTTPLogging)
       .promise().then (res)->
         expect(res.request.name).to.equal "LoginService"
