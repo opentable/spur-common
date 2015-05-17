@@ -1,6 +1,5 @@
 module.exports = (_, Promise, fsPromise, JSON)->
 
-
   new class Utils
 
     prop:(prop)-> (ob)-> ob[prop]
