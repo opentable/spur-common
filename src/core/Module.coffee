@@ -14,6 +14,8 @@ module.exports = ()->
     @include: (obj) ->
       @::$modules ?= []
       @::$modules.push(obj)
+
       for key, value of obj::
         @::[key] = value
+
       @

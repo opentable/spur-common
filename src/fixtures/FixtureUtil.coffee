@@ -6,7 +6,7 @@ module.exports = (path, Promise, fsPromise, FixtureCache, Logger)->
       @cache = FixtureCache
 
     setFixturesPath:(@fixturesPath)->
-      Logger.info "Fixtures path changed to: #{@fixturesPath}"
+      Logger.log "Fixtures path changed to: #{@fixturesPath}"
 
     get:(name)=>
       @cache.getOrPromise name, ()=> @readAndProcessFile(name)
@@ -21,7 +21,7 @@ module.exports = (path, Promise, fsPromise, FixtureCache, Logger)->
 
       filePath = path.join(@fixturesPath, "#{name}.json")
 
-      Logger.info "Using file fixture: #{filePath}"
+      Logger.log "Using file fixture: #{filePath}"
 
       fsPromise
         .readFileAsync(filePath, {encoding: 'utf8'})

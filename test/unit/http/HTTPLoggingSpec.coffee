@@ -29,7 +29,7 @@ describe "HTTPLogging", ->
     @HTTPService
       .get("http://someurl")
       .promise().then (res)=>
-        expect(@Logger.recorded.info).to.deep.equal  [
+        expect(@Logger.recorded.log).to.deep.equal  [
           [ 'HTTPService attempting: GET http://someurl' ],
           [ 'HTTPService success: GET http://someurl, timing:33ms, status:200' ]
         ]
@@ -47,7 +47,7 @@ describe "HTTPLogging", ->
       .get("http://someurl")
       .promise().catch (e)=>
         expect(@Logger.recorded).to.deep.equal  {
-          info: [ [ 'HTTPService attempting: GET http://someurl' ] ],
+          log: [ [ 'HTTPService attempting: GET http://someurl' ] ],
           error:
            [ [ 'HTTPService error: GET http://someurl, timing:33ms, status:400',
                'Validation Error' ] ]
