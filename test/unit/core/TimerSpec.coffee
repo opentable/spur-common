@@ -1,16 +1,20 @@
 describe "Timer", ->
 
   beforeEach ()->
-    injector().inject (@Timer)=>
+    injector().inject (@Timer, @nodeProcess)=>
+      @hrtimeStub = sinon.stub(@nodeProcess, "hrtime")
+      @hrtimeStub.onCall(0).returns([ 7973, 560332779])
+      @hrtimeStub.onCall(1).returns([ 0, 1065832 ])
+
 
   afterEach ()->
+    @hrtimeStub.restore()
 
   it "test timer", ->
-    clock = sinon.useFakeTimers()
     timer = new @Timer().start()
-    clock.tick(25)
-    expect(timer.stop()).to.equal 25
-    clock.restore()
+
+    duration = timer.stop()
+    expect(duration).to.equal 1.066
 
   it "mockDuration()", ->
     @Timer.mockDuration(22)
