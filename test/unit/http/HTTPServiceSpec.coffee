@@ -29,6 +29,9 @@ describe "HTTPService", ->
 
     @HTTPService.setGlobalPlugins([@HTTPTiming])
 
+    # Testing against dupe add
+    @HTTPService.setGlobalPlugins([@HTTPTiming])
+
     logs = []
 
     class HTTPLogging extends @HTTPPlugin
@@ -36,16 +39,24 @@ describe "HTTPService", ->
       end:()->
         logs.push @request.name,@request.url
 
+    class HTTPFakePlugin extends @HTTPPlugin
+      start:()->
+      end:()->
+
+    @HTTPService.addGlobalPlugin(HTTPFakePlugin)
+
     @HTTPService
       .get("http://someurl")
       .named("LoginService")
       .tagged({endpoint: "EndpointName", tag2: "Some tag value"})
       .plugin(HTTPLogging)
-      .promise().then (res)->
+      .promise().then (res)=>
         expect(res.request.name).to.equal "LoginService"
         expect(res.request.tags).to.deep.equal {endpoint: "EndpointName", tag2: "Some tag value"}
         expect(res.request.duration).to.equal 33
         expect(logs).to.deep.equal [ 'LoginService', 'http://someurl' ]
+        expect(@HTTPService.getGlobalPlugins()).to.deep.contain(HTTPFakePlugin)
+        expect(@HTTPService.getGlobalPlugins().length).to.equal(2)
         done()
 
   it "http error",(done)->

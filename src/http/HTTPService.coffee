@@ -70,6 +70,16 @@ module.exports = (superagent, Promise, _, SpurErrors, FormData)->
       @field(k,v)
     @
 
-  superagent.setGlobalPlugins = (@globalPlugins)->
+  superagent.setGlobalPlugins = (plugins)->
+    if _.isArray(plugins)
+      superagent.globalPlugins = _.unique(_.union(superagent.globalPlugins, plugins))
+    else
+      superagent.addGlobalPlugin(plugins)
+
+  superagent.getGlobalPlugins = ()->
+    superagent.globalPlugins
+
+  superagent.addGlobalPlugin = (plugin)->
+    superagent.globalPlugins.push(plugin) unless _.contains(superagent.globalPlugins, plugin)
 
   superagent
