@@ -16,10 +16,6 @@ describe "BaseDelegate", ->
           "log", "debug"
         ]
 
-
-  it "should exist", ->
-    expect(@BaseDelegate).to.exist
-
   it "base delegate test", ->
 
     delegate = new @SomeDelegate()
@@ -27,8 +23,8 @@ describe "BaseDelegate", ->
     delegate.debug("hello")
 
     expect(@logs).to.deep.equal [
-      [ 'SomeDelegate#log: ', 'hi' ],
-      [ 'SomeDelegate#debug: ', 'hello' ]
+      [ '\u001b[36mSomeDelegate#log: \u001b[39m', 'hi' ],
+      [ '\u001b[36mSomeDelegate#debug: \u001b[39m', 'hello' ]
     ]
     delegate.useRecorder()
     delegate.log("hi2")
@@ -54,10 +50,7 @@ describe "BaseDelegate", ->
     ]
     delegate.log("foo")
     expect(@logs).to.deep.equal [
-      [ 'SomeDelegate#log: ', 'foo' ],
-      [ 'SomeDelegate#log: ', 'foo' ],
-      [ 'SomeDelegate#log: ', 'foo' ]
+      [ '\u001b[36mSomeDelegate#log: \u001b[39m', 'foo' ],
+      [ '\u001b[36mSomeDelegate#log: \u001b[39m', 'foo' ],
+      [ '\u001b[36mSomeDelegate#log: \u001b[39m', 'foo' ]
     ]
-
-
-

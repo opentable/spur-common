@@ -15,6 +15,7 @@ module.exports = ()->
     "moment"          : require "moment-timezone"
     "superagent"      : require "superagent"
     "FormData"        : require "form-data"
+    "consoleColors"   : require "colors/safe"
 
     "console"         : console
     "nodeProcess"     : process
