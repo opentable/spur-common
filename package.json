@@ -45,7 +45,8 @@
     "moment-timezone": "^0.3.0",
     "spur-config": "0.0.1",
     "form-data": "^0.2.0",
-    "joi": "^5.1.0"
+    "joi": "^5.1.0",
+    "colors": "1.1.0"
   },
   "devDependencies": {
     "sinon-chai": "^2.6.0",
