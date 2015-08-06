@@ -2,7 +2,6 @@ module.exports = (_, console, consoleColors)->
 
   class BaseDelegate
 
-
     supportsMethods:(@_methods)->
       for methodName in @_methods
         do(methodName) =>
