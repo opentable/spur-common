@@ -1,8 +1,6 @@
 # spur-common
 
-Common node library that is implemented through the use of spur-ioc and bluebird promises.
-
-The project is still a work in progress. We are in the middle of making adjustments and are starting to dogfood the module in our own applications.
+A Node.JS library of common modules used to create common applications.
 
 [![NPM version](https://badge.fury.io/js/spur-common.png)](http://badge.fury.io/js/spur-common)
 [![Build Status](https://travis-ci.org/opentable/spur-common.png?branch=master)](https://travis-ci.org/opentable/spur-common)
