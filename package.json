@@ -1,7 +1,7 @@
 {
   "name": "spur-common",
   "version": "0.1.15",
-  "description": "Common node library that is implemented through the use of spur-ioc and bluebird promises.",
+  "description": "A Node.JS library of common modules used to create common applications.",
   "main": "index.js",
   "scripts": {
     "test": "mocha --opts ./test/mocha.opts ./test/"
@@ -11,9 +11,8 @@
     "url": "git://github.com/opentable/spur-common.git"
   },
   "keywords": [
-    "node",
-    "common",
-    "library"
+    "spur",
+    "spur-framework"
   ],
   "author": {
     "name": "Agustin Colchado",
@@ -36,14 +35,14 @@
   "homepage": "https://github.com/opentable/spur-common",
   "dependencies": {
     "coffee-script": "^1.8.0",
-    "spur-ioc": "latest",
-    "spur-errors": "latest",
+    "spur-ioc": "^0.1.2",
+    "spur-errors": "^0.0.4",
+    "spur-config": "^0.1.0",
     "lodash": "^3.0.0",
     "bluebird": "^2.9.3",
     "winston": "^0.8.3",
     "superagent": "^0.21.0",
     "moment-timezone": "^0.3.0",
-    "spur-config": "0.0.1",
     "form-data": "^0.2.0",
     "joi": "^5.1.0",
     "colors": "1.1.0"
