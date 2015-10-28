@@ -15,6 +15,7 @@ The Spur Framework is a collection of commonly used Node.JS libraries used to cr
 
 - [Quick start](#quick-start)
     - [Usage](#usage)
+- [API Reference](API.md)
 - [Available dependencies in injector](#available-dependencies-in-injector)
 - [Contributing](#contributing)
 - [License](#license)
@@ -77,46 +78,48 @@ injector().inject(function(UncaughtHander, Logger){
 
 # Available dependencies in injector
 
-To see the latest list of the default dependencies that are injected, check out the [injector.coffee](src/injector.coffee) file.
+To see the latest list of the default dependencies that are injected, check out the [injector.coffee](src/injector.coffee) file. Here is a short list of of all of the dependencies available:
 
-Libraries: (injection alias/library)
+### System dependencies
 
-```javascript
-  {
-    "_"               : "lodash"
-    "Promise"         : "bluebird"
-    "fs"              : "fs"
-    "path"            : "path"
-    "SpurErrors"      : "spur-errors"
-    "winston"         : "winston"
-    "moment"          : "moment"
-    "superagent"      : "superagent"
-  }
-```
+| Name            | Original Module Name | Description             |
+| :----           | :----                | :----                   |
+| **fs**          | fs                   | Node file system        |
+| **path**        | path                 | Node path module        |
+| **nodeProcess** | process              | Node process module     |
+| **console**     | console              | JavaScript Console      |
+| **JSON**        | JSON                 | JavaScript JSON library |
 
-Others:
+### Libraries
 
-```javascript
-  {
-    "console"         : console
-    "nodeProcess"     : process
-  }
-```
+List of external dependencies used and exposed by spur-common. They can be found at npmjs.org using their original names.
 
-Directory contents from src/:
+| Name              | Original Module Name                                             |
+| :----             | :----                                                            |
+| **-**             | [lodash](https://www.npmjs.org/package/lodash)                   |
+| **Promise**       | [bluebird](https://www.npmjs.org/package/bluebird)               |
+| **winston**       | [winston](https://www.npmjs.org/package/winston)                 |
+| **moment**        | [moment-timezone](https://www.npmjs.org/package/moment-timezone) |
+| **superagent**    | [superagent](https://www.npmjs.org/package/superagent)           |
+| **FormData**      | [form-data](https://www.npmjs.org/package/form-data)             |
+| **consoleColors** | [colors](https://www.npmjs.org/package/colors)                   |
+| **SpurErrors**    | [spur-errors](https://www.npmjs.org/package/spur-errors)         |
 
-```javascript
-  [
-    "core"
-    "fixtures"
-    "http"
-    "logging"
-    "promisify"
-    "utils"
-  ]
-```
+### Local dependecies
 
-Note: Any injectors in which you merge this library to will get all of these dependencies by default.
+All of the files under the `src/` directory are made available when this module is merged into another injector. The following list are the notable dependencies available.
+
+| Name                | Source                                  | Description                                                                                                                                                                                                  |
+| :----               | :----                                   | :----                                                                                                                                                                                                        |
+| **BaseDelegate**    | [code](src/core/BaseDelegate.coffee)    | A utility class used to create classes with delegates that can be allow us to replace implementations dynamically and allow for plugins. For an example, take a look at [Logger](src/logging/Logger.coffee). |
+| **UncaughtHandler** | [code](src/core/UncaughtHandler.coffee) | Simple module that catches uncaught errors when initialized.                                                                                                                                                 |
+| **FixtureUtil**     | [code](src/fixtures/FixtureUtil.coffee) | Fixtures util that allows you to read test files from a specific directory.                                                                                                                                  |
+| **HTTPService**     | [code](src/http/HTTPService.coffee)     | An extension of the superagent module to support promises and other nice enhancements to make HTTP requests simpler to process.                                                                              |
+| **Logger**          | [code](src/logging/Logger.coffee)       | An implementation of a logger that extends console.log and makes it so you can add plugins for logging to different sources.                                                                                 |
+| **fsPromise**       | [code](src/promisify/fsPromise.coffee)  | A wrapper for the Node fs module that adds promises to the module.                                                                                                                                           |
+| **DateTimeUtils**   | [code](src/utils/DateTimeUtils.coffee)  | Wrapper of moment that allows ease of mocking for testing.                                                                                                                                                   |
+| **Utils**           | [code](src/utils/Utils.coffee)          | A collection of random utilities.                                                                                                                                                                            |
+
 
 # Contributing
 
