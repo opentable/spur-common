@@ -1,6 +1,6 @@
 {
   "name": "spur-common",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "description": "A Node.JS library of common modules used to create common applications.",
   "main": "index.js",
   "scripts": {
