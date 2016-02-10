@@ -130,3 +130,57 @@ describe "HTTPService", ->
         ]
         expect(valid).to.equal true
         done()
+
+  describe "headers", ->
+
+    beforeEach ->
+      nock.enableNetConnect()
+      nock.restore()
+
+      @createServer = ()->
+        http = require("http")
+        http.createServer((request, response) =>
+          response.writeHead(200, {'Content-Type': 'text/plain'})
+          response.end(JSON.stringify(request.headers))
+        ).listen 1234, =>
+          console.log('Server running at http://127.0.0.1:1234/')
+
+    beforeEach ->
+      nock.enableNetConnect()
+      nock.restore()
+
+      @createServer = ()->
+        http = require("http")
+        http.createServer((request, response) =>
+          response.writeHead(200, {'Content-Type': 'text/plain'})
+          response.end(JSON.stringify(request.headers))
+        ).listen 1234, =>
+          console.log('Server running at http://127.0.0.1:1234/')
+
+    it "should pass in the headers when using GET", (done)->
+      server = @createServer()
+      @HTTPService
+        .get("http://localhost:1234/get-me")
+        .set("spur-http-header", "spur-http-header-value")
+        .promise().then (response)=>
+          headers = JSON.parse(response.text)
+          console.log("Headers:", headers)
+
+          expect(headers["spur-http-header"]).to.equal("spur-http-header-value")
+          expect(response.statusCode).to.equal 200
+
+          server.close(done)
+
+    it "should pass in the headers when using POST", (done)->
+      server = @createServer()
+      @HTTPService
+        .post("http://localhost:1234/get-me")
+        .set("spur-http-header", "spur-http-header-value")
+        .promise().then (response)=>
+          headers = JSON.parse(response.text)
+          console.log("Headers:", headers)
+
+          expect(headers["spur-http-header"]).to.equal("spur-http-header-value")
+          expect(response.statusCode).to.equal 200
+
+          server.close(done)
