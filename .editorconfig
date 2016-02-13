@@ -25,3 +25,6 @@ indent_size = 2
 
 [node_modules/**.js]
 codepaint = false
+
+[node_modules/**.coffee]
+codepaint = false

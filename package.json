@@ -1,19 +1,8 @@
 {
   "name": "spur-common",
+  "description": "A Node.JS library of common modules used as a base to most Node.JS applications.",
   "version": "0.1.16",
-  "description": "A Node.JS library of common modules used to create common applications.",
   "main": "index.js",
-  "scripts": {
-    "test": "mocha --opts ./test/mocha.opts ./test/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/opentable/spur-common.git"
-  },
-  "keywords": [
-    "spur",
-    "spur-framework"
-  ],
   "author": {
     "name": "Agustin Colchado",
     "email": "agustin@colchado.com"
@@ -28,11 +17,28 @@
       "email": "phoey1@gmail.com"
     }
   ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "keywords": [
+    "spur",
+    "spur-framework"
+  ],
   "license": "MIT",
+  "scripts": {
+    "test": "mocha --opts ./test/mocha.opts ./test/ && istanbul report text-summary lcov"
+  },
   "bugs": {
     "url": "https://github.com/opentable/spur-common/issues"
   },
   "homepage": "https://github.com/opentable/spur-common",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/opentable/spur-common.git"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
   "dependencies": {
     "coffee-script": "^1.8.0",
     "spur-ioc": "^0.1.2",
@@ -48,10 +54,12 @@
     "colors": "1.1.0"
   },
   "devDependencies": {
-    "sinon-chai": "^2.6.0",
-    "chai": "^1.10.0",
-    "sinon": "^1.12.2",
-    "mocha": "^2.1.0",
-    "nock": "^0.58.0"
+    "chai": "^3.5.0",
+    "coffee-coverage": "^1.0.1",
+    "coveralls": "^2.11.6",
+    "istanbul": "^0.4.2",
+    "mocha": "^2.4.5",
+    "nock": "^7.0.2",
+    "sinon": "^1.17.3"
   }
 }
