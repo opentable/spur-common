@@ -134,7 +134,7 @@ Please send in pull requests and they will be reviewed in a timely manner. Pleas
 
 ## Style guide
 
-The majority of the settings are controlled using an [EditorConfig](.editorconfig) configuration file. To use it [please download a plugin](http://editorconfig.org/#download) for your editor of choice.
+The majority of the settings are controlled using an [EditorConfig](.editorconfig) configuration file. To use it [please download a plugin](http://editorconfig.org/#download) the plugin for your editor of choice.
 
 ## All tests should pass
 
