@@ -1,4 +1,4 @@
-module.exports = (superagent, Promise, _, SpurErrors, FormData)->
+module.exports = (superagent, Promise, _, FormData, HTTPResponseProcessing)->
   Request = superagent.Request
 
   superagent.globalPlugins = []
@@ -19,32 +19,23 @@ module.exports = (superagent, Promise, _, SpurErrors, FormData)->
     self.name ?= @getDefaultName()
     self.tags ?= {}
     @_plugins = (@_plugins or []).concat(superagent.globalPlugins)
+
     @_pluginInstances = _.compact _.map @_plugins, (p)->
       p.start(self)
 
     return new Promise (resolve, reject)=>
+
       Request::end.call self, (err, res)=>
         self.response = res
-        if err
-          self.error = SpurErrors.InternalServerError.create("HTTP Error: #{@method} #{@url} #{err.message}", err)
-        else if res.status >= 400
-          self.error = SpurErrors.errorByStatusCode(res.status)?.create()
-          unless self.error
-            self.error = SpurErrors.BaseError.create("HTTP Error: #{res.status} #{@method} #{@url}")
-              .setStatusCode(res.status)
 
-          errorResponse =
-            if _.isEmpty(res.body)
-              res.text
-            else
-              res.body
-
-          self.error.setData(errorResponse)
+        parser = HTTPResponseProcessing.create(@method, @url, res, err).process()
+        self.error = parser.error
 
         if self.error
           reject(self.error)
         else
           resolve(res)
+
         _.invoke(self._pluginInstances, "end")
 
   Request::appendFile = (name, contents, params)->
