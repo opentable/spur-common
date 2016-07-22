@@ -1,20 +1,20 @@
-var spurConfig = require("spur-config");
+const spurConfig = require('spur-config');
 
-module.exports = function(ioc, folderPath, configName){
+module.exports = function (ioc, folderPath, configNameArg) {
   try {
-    var configName = configName || "config";
-    var configLoaderName = configName + "Loader";
+    const configName = configNameArg || 'config';
+    const configLoaderName = '${configName}Loader';
 
-    var configLoader = spurConfig.load(folderPath);
-    var config = configLoader.getConfig();
+    const configLoader = spurConfig.load(folderPath);
+    const config = configLoader.getConfig();
 
-    var dependencies = {};
-    dependencies[configLoaderName] = configLoader
-    dependencies[configName] = config
+    const dependencies = {};
+    dependencies[configLoaderName] = configLoader;
+    dependencies[configName] = config;
 
     ioc.registerDependencies(dependencies);
-  } catch (e){
-    console.error("Error registering config", e)
-    throw e
+  } catch (e) {
+    console.error('Error registering config', e);
+    throw e;
   }
 };
