@@ -1,0 +1,10 @@
+.eslintrc
+.eslintignore
+
+/.editorconfig
+/.babelrc
+/.travis.yml
+/.npmignore
+
+/test
+/coverage
