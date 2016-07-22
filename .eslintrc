@@ -1,0 +1,6 @@
+{
+  "extends": "spur",
+  "rules": {
+    "max-len": 0
+  }
+}
