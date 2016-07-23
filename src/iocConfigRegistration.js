@@ -1,9 +1,9 @@
 import spurConfig from 'spur-config';
 
-function iocRegistration(ioc, folderPath, configNameArg) {
+function iocConfigRegistration(ioc, folderPath, configNameArg) {
   try {
     const configName = configNameArg || 'config';
-    const configLoaderName = '${configName}Loader';
+    const configLoaderName = `${configName}Loader`;
 
     const configLoader = spurConfig.load(folderPath);
     const config = configLoader.getConfig();
@@ -19,4 +19,4 @@ function iocRegistration(ioc, folderPath, configNameArg) {
   }
 }
 
-export default iocRegistration;
+export default iocConfigRegistration;

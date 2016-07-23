@@ -1,1 +1,2 @@
-module.exports = require('./lib/iocRegistration');
+/* This file is here to support backward compatability with previous verions */
+module.exports = require('./lib/iocConfigRegistration');
