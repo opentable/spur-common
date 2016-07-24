@@ -6,7 +6,8 @@ describe "HTTPService", ->
   beforeEach ->
     injector().inject (@HTTPService, @Timer, @HTTPPlugin, @HTTPTiming)=>
 
-    @Timer.mockDuration(33)
+    @mockDuration = 33
+    @Timer.mockDuration(@mockDuration)
 
     nock.disableNetConnect()
 
@@ -53,7 +54,7 @@ describe "HTTPService", ->
       .promise().then (res)=>
         expect(res.request.name).to.equal "LoginService"
         expect(res.request.tags).to.deep.equal {endpoint: "EndpointName", tag2: "Some tag value"}
-        expect(res.request.duration).to.equal 33
+        expect(res.request.duration).to.equal @mockDuration
         expect(logs).to.deep.equal [ 'LoginService', 'http://someurl' ]
         expect(@HTTPService.getGlobalPlugins()).to.deep.contain(HTTPFakePlugin)
         expect(@HTTPService.getGlobalPlugins().length).to.equal(2)
@@ -137,50 +138,24 @@ describe "HTTPService", ->
       nock.enableNetConnect()
       nock.restore()
 
-      @createServer = ()->
-        http = require("http")
-        http.createServer((request, response) =>
-          response.writeHead(200, {'Content-Type': 'text/plain'})
-          response.end(JSON.stringify(request.headers))
-        ).listen 1234, =>
-          console.log('Server running at http://127.0.0.1:1234/')
-
-    beforeEach ->
-      nock.enableNetConnect()
-      nock.restore()
-
-      @createServer = ()->
-        http = require("http")
-        http.createServer((request, response) =>
-          response.writeHead(200, {'Content-Type': 'text/plain'})
-          response.end(JSON.stringify(request.headers))
-        ).listen 1234, =>
-          console.log('Server running at http://127.0.0.1:1234/')
-
     it "should pass in the headers when using GET", (done)->
-      server = @createServer()
+      testServer.listen(1234)
       @HTTPService
         .get("http://localhost:1234/get-me")
         .set("spur-http-header", "spur-http-header-value")
         .promise().then (response)=>
           headers = JSON.parse(response.text)
-          console.log("Headers:", headers)
-
           expect(headers["spur-http-header"]).to.equal("spur-http-header-value")
           expect(response.statusCode).to.equal 200
-
-          server.close(done)
+          testServer.close(done)
 
     it "should pass in the headers when using POST", (done)->
-      server = @createServer()
+      testServer.listen(1234)
       @HTTPService
         .post("http://localhost:1234/get-me")
         .set("spur-http-header", "spur-http-header-value")
         .promise().then (response)=>
           headers = JSON.parse(response.text)
-          console.log("Headers:", headers)
-
           expect(headers["spur-http-header"]).to.equal("spur-http-header-value")
           expect(response.statusCode).to.equal 200
-
-          server.close(done)
+          testServer.close(done)

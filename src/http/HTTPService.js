@@ -31,13 +31,13 @@ module.exports = function (superagent, Promise, _, FormData, HTTPResponseProcess
 
   Request.prototype.promise = function () {
     const self = this;
-    self.name = self.name || this.getDefaultName();
-    self.tags = self.tags || {};
+
+    if (self.name == null) { self.name = this.getDefaultName(); }
+    if (self.tags == null) { self.tags = {}; }
+
     this._plugins = (this._plugins || []).concat(superagent.globalPlugins);
 
-    this._pluginInstances = _.compact(_.map(this._plugins, (p) => {
-      p.start(self);
-    }));
+    this._pluginInstances = _.compact(_.map(this._plugins, (p) => p.start(self)));
 
     return new Promise((resolve, reject) => {
       Request.prototype.end.call(self, (err, res) => {
@@ -52,13 +52,13 @@ module.exports = function (superagent, Promise, _, FormData, HTTPResponseProcess
           resolve(res);
         }
 
-        _.invoke(self._pluginInstances, 'end');
+        return _.invoke(self._pluginInstances, 'end');
       });
     });
   };
 
   Request.prototype.appendFile = function (name, contents, params) {
-    if (!this._formData) {
+    if (this._formData == null) {
       this._formData = new FormData();
     }
 
@@ -91,9 +91,9 @@ module.exports = function (superagent, Promise, _, FormData, HTTPResponseProcess
   };
 
   Request.prototype.setFields = function (fields) {
-    for (const [k, v] of fields) {
-      this.field(k, v);
-    }
+    Object.keys(fields).forEach((key) => {
+      this.field(key, fields[key]);
+    });
 
     return this;
   };
@@ -101,19 +101,20 @@ module.exports = function (superagent, Promise, _, FormData, HTTPResponseProcess
   superagent.setGlobalPlugins = function (plugins) {
     if (_.isArray(plugins)) {
       superagent.globalPlugins = _.unique(_.union(superagent.globalPlugins, plugins));
-    } else {
-      superagent.addGlobalPlugin(plugins);
+      return superagent.globalPlugins;
     }
+
+    return superagent.addGlobalPlugin(plugins);
   };
 
-  superagent.getGlobalPlugins = function () {
-    return superagent.globalPlugin;
-  };
+  superagent.getGlobalPlugins = () => superagent.globalPlugins;
 
   superagent.addGlobalPlugin = function (plugin) {
     if (!_.contains(superagent.globalPlugins, plugin)) {
       superagent.globalPlugins.push(plugin);
     }
+
+    return superagent.globalPlugins;
   };
 
   return superagent;
