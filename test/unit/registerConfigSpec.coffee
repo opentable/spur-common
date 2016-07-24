@@ -1,11 +1,7 @@
 registerConfig = require "../../registerConfig"
 path           = require "path"
 
-
 describe "registerConfig", ->
-
-  beforeEach ->
-
 
   it "default configName", ->
     ioc = injector()
