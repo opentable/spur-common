@@ -1,4 +1,4 @@
-describe "ConsoleLogger", ->
+describe "ConsoleLogger Original", ->
 
   beforeEach ()->
     @MockLogger = {
@@ -39,4 +39,3 @@ describe "ConsoleLogger", ->
   it "should verbose()", ->
     @ConsoleLogger.verbose("testing verbose")
     expect(@getResult()).to.deep.equal ["\u001b[36mConsoleLogger#verbose: \u001b[39m", "testing verbose"]
-

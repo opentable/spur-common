@@ -1,7 +1,7 @@
 nock = require "nock"
 _    = require "lodash"
 
-describe "HTTPService", ->
+describe "HTTPService Original", ->
 
   beforeEach ->
     injector().inject (@HTTPService, @Timer, @HTTPPlugin, @HTTPTiming)=>

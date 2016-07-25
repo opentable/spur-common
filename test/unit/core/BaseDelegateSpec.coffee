@@ -1,4 +1,4 @@
-describe "BaseDelegate", ->
+describe "BaseDelegate Original", ->
 
   beforeEach ->
     @logs = []

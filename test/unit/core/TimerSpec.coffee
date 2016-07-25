@@ -1,4 +1,4 @@
-describe "Timer", ->
+describe "Timer Original", ->
 
   beforeEach ()->
     injector().inject (@Timer, @nodeProcess)=>

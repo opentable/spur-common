@@ -1,4 +1,4 @@
-describe "UncaughtHandler", ->
+describe "UncaughtHandler Original", ->
 
   beforeEach ->
     @mockProcess =

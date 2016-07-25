@@ -1,4 +1,4 @@
-describe "Module", ->
+describe "Module Original", ->
 
   beforeEach ()->
     injector().inject (@Module)=>

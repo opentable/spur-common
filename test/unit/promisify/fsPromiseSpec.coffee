@@ -1,4 +1,4 @@
-describe "fsPromise", ->
+describe "fsPromise Original", ->
 
   beforeEach ->
     injector().inject (@fsPromise)=>

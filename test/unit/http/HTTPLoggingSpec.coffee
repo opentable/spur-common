@@ -1,6 +1,6 @@
 nock = require "nock"
 
-describe "HTTPLogging", ->
+describe "HTTPLogging Original", ->
 
   beforeEach ->
     injector().inject (@HTTPService, @Timer, @HTTPPlugin, @HTTPLogging, @Logger)=>
