@@ -1,9 +1,11 @@
-describe "Module Original", ->
+describe "Original", ->
 
-  beforeEach ()->
-    injector().inject (@Module)=>
+  describe "Module", ->
 
-  afterEach ()->
+    beforeEach ()->
+      injector().inject (@Module)=>
 
-  it "should exist", ->
-    expect(@Module).to.exist
+    afterEach ()->
+
+    it "should exist", ->
+      expect(@Module).to.exist

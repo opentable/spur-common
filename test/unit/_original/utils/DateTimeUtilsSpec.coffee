@@ -1,15 +1,17 @@
-describe "DateTimeUtils Original", ->
+describe "Original", ->
 
-  beforeEach ()->
-    @clock = sinon.useFakeTimers()
-    injector().inject (@DateTimeUtils, @moment)=>
+  describe "DateTimeUtils", ->
 
-  afterEach ()->
-    @clock.restore()
+    beforeEach ()->
+      @clock = sinon.useFakeTimers()
+      injector().inject (@DateTimeUtils, @moment)=>
 
-  it "now()", ->
-    expect(@DateTimeUtils.now())
-      .to.deep.equal @moment()
+    afterEach ()->
+      @clock.restore()
 
-  it "nowMs()", ->
-    expect(@DateTimeUtils.nowMs()).to.equal +new Date
+    it "now()", ->
+      expect(@DateTimeUtils.now())
+        .to.deep.equal @moment()
+
+    it "nowMs()", ->
+      expect(@DateTimeUtils.nowMs()).to.equal +new Date

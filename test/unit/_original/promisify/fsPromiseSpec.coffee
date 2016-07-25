@@ -1,9 +1,11 @@
-describe "fsPromise Original", ->
+describe "Original", ->
 
-  beforeEach ->
-    injector().inject (@fsPromise)=>
+  describe "fsPromise", ->
 
-  it "should exist", ->
-    expect(@fsPromise).to.exist
-    expect(@fsPromise.exists).to.exist
-    expect(@fsPromise.writeFileAsync).to.exist
+    beforeEach ->
+      injector().inject (@fsPromise)=>
+
+    it "should exist", ->
+      expect(@fsPromise).to.exist
+      expect(@fsPromise.exists).to.exist
+      expect(@fsPromise.writeFileAsync).to.exist

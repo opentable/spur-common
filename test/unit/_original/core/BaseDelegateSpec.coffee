@@ -1,56 +1,58 @@
-describe "BaseDelegate Original", ->
+describe "Original", ->
 
-  beforeEach ->
-    @logs = []
-    mockConsole =
-      log:(args...)=> @logs.push(args)
+  describe "BaseDelegate", ->
 
-    injector()
-      .addDependency("console", mockConsole, true)
-      .inject (@BaseDelegate)=>
+    beforeEach ->
+      @logs = []
+      mockConsole =
+        log:(args...)=> @logs.push(args)
 
-    class @SomeDelegate extends @BaseDelegate
+      injector()
+        .addDependency("console", mockConsole, true)
+        .inject (@BaseDelegate)=>
 
-      constructor:()->
-        @supportsMethods [
-          "log", "debug"
-        ]
+      class @SomeDelegate extends @BaseDelegate
 
-  it "base delegate test", ->
+        constructor:()->
+          @supportsMethods [
+            "log", "debug"
+          ]
 
-    delegate = new @SomeDelegate()
-    delegate.log("hi")
-    delegate.debug("hello")
+    it "base delegate test", ->
 
-    expect(@logs).to.deep.equal [
-      [ '\u001b[36mSomeDelegate#log: \u001b[39m', 'hi' ],
-      [ '\u001b[36mSomeDelegate#debug: \u001b[39m', 'hello' ]
-    ]
-    delegate.useRecorder()
-    delegate.log("hi2")
-    delegate.debug("hello2")
-    expect(delegate.recorded.log).to.deep.equal [["hi2"]]
-    expect(delegate.recorded.debug).to.deep.equal [["hello2"]]
-    delegate.use({
-      log:(@delegateLog)=>
-      debug:(@delegateDebug)=>
-    })
-    delegate.log("foo")
-    delegate.debug("bar")
-    expect(@delegateLog).to.equal "foo"
-    expect(@delegateDebug).to.equal "bar"
+      delegate = new @SomeDelegate()
+      delegate.log("hi")
+      delegate.debug("hello")
 
-  it "multiple delegates", ->
+      expect(@logs).to.deep.equal [
+        [ '\u001b[36mSomeDelegate#log: \u001b[39m', 'hi' ],
+        [ '\u001b[36mSomeDelegate#debug: \u001b[39m', 'hello' ]
+      ]
+      delegate.useRecorder()
+      delegate.log("hi2")
+      delegate.debug("hello2")
+      expect(delegate.recorded.log).to.deep.equal [["hi2"]]
+      expect(delegate.recorded.debug).to.deep.equal [["hello2"]]
+      delegate.use({
+        log:(@delegateLog)=>
+        debug:(@delegateDebug)=>
+      })
+      delegate.log("foo")
+      delegate.debug("bar")
+      expect(@delegateLog).to.equal "foo"
+      expect(@delegateDebug).to.equal "bar"
 
-    delegate = new @SomeDelegate()
-    delegate.delegates = [
-      delegate.consoleDelegate
-      delegate.consoleDelegate
-      delegate.consoleDelegate
-    ]
-    delegate.log("foo")
-    expect(@logs).to.deep.equal [
-      [ '\u001b[36mSomeDelegate#log: \u001b[39m', 'foo' ],
-      [ '\u001b[36mSomeDelegate#log: \u001b[39m', 'foo' ],
-      [ '\u001b[36mSomeDelegate#log: \u001b[39m', 'foo' ]
-    ]
+    it "multiple delegates", ->
+
+      delegate = new @SomeDelegate()
+      delegate.delegates = [
+        delegate.consoleDelegate
+        delegate.consoleDelegate
+        delegate.consoleDelegate
+      ]
+      delegate.log("foo")
+      expect(@logs).to.deep.equal [
+        [ '\u001b[36mSomeDelegate#log: \u001b[39m', 'foo' ],
+        [ '\u001b[36mSomeDelegate#log: \u001b[39m', 'foo' ],
+        [ '\u001b[36mSomeDelegate#log: \u001b[39m', 'foo' ]
+      ]

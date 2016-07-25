@@ -1,38 +1,40 @@
 registerConfig = require "../../../registerConfig"
 path           = require "path"
 
-describe "registerConfig Original", ->
+describe "Original", ->
 
-  it "default configName", ->
-    ioc = injector()
-    configPath = path.join(__dirname, "../../fixtures/config")
-    registerConfig(ioc, configPath)
+  describe "registerConfig", ->
 
-    ioc.inject (config, configLoader)->
+    it "default configName", ->
+      ioc = injector()
+      configPath = path.join(__dirname, "../../fixtures/config")
+      registerConfig(ioc, configPath)
 
-      expect(config).to.deep.equal {
-        a:"a", c:"c"
-      }
-      expect(configLoader.configName)
-        .to.equal "test"
+      ioc.inject (config, configLoader)->
 
-  it "specified configName", ->
-    ioc = injector()
-    configPath = path.join(__dirname, "../../fixtures/config")
-    registerConfig(ioc, configPath, "alphaConfig")
+        expect(config).to.deep.equal {
+          a:"a", c:"c"
+        }
+        expect(configLoader.configName)
+          .to.equal "test"
 
-    ioc.inject (alphaConfig, alphaConfigLoader)->
-
-      expect(alphaConfig).to.deep.equal {
-        a:"a", c:"c"
-      }
-      expect(alphaConfigLoader.configName)
-        .to.equal "test"
-
-  it "errors", ->
-    ioc = injector()
-    configPath = path.join(__dirname, "../../fixtures/config2")
-    expect(->
-      console.log "===== EXPECTED ERROR BELOW ====="
+    it "specified configName", ->
+      ioc = injector()
+      configPath = path.join(__dirname, "../../fixtures/config")
       registerConfig(ioc, configPath, "alphaConfig")
-    ).to.throw()
+
+      ioc.inject (alphaConfig, alphaConfigLoader)->
+
+        expect(alphaConfig).to.deep.equal {
+          a:"a", c:"c"
+        }
+        expect(alphaConfigLoader.configName)
+          .to.equal "test"
+
+    it "errors", ->
+      ioc = injector()
+      configPath = path.join(__dirname, "../../fixtures/config2")
+      expect(->
+        console.log "===== EXPECTED ERROR BELOW ====="
+        registerConfig(ioc, configPath, "alphaConfig")
+      ).to.throw()

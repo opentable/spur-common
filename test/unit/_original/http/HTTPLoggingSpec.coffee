@@ -1,56 +1,58 @@
 nock = require "nock"
 
-describe "HTTPLogging Original", ->
+describe "Original", ->
 
-  beforeEach ->
-    injector().inject (@HTTPService, @Timer, @HTTPPlugin, @HTTPLogging, @Logger)=>
+  describe "HTTPLogging", ->
 
-    @Timer.mockDuration(33)
+    beforeEach ->
+      injector().inject (@HTTPService, @Timer, @HTTPPlugin, @HTTPLogging, @Logger)=>
 
-    @HTTPService.setGlobalPlugins([@HTTPLogging])
+      @Timer.mockDuration(33)
 
-    @Logger.useRecorder()
+      @HTTPService.setGlobalPlugins([@HTTPLogging])
 
-    nock.disableNetConnect()
+      @Logger.useRecorder()
 
-  afterEach ->
-    nock.cleanAll()
+      nock.disableNetConnect()
 
-  it "should exist", ->
-    expect(@HTTPService).to.exist
+    afterEach ->
+      nock.cleanAll()
 
-  it "http success", (done)->
-    nock("http://someurl")
-      .get("/")
-      .reply(200, {
-        message:"response"
-      })
+    it "should exist", ->
+      expect(@HTTPService).to.exist
 
-    @HTTPService
-      .get("http://someurl")
-      .promise().then (res)=>
-        expect(@Logger.recorded.log).to.deep.equal  [
-          [ 'HTTPService attempting: GET http://someurl' ],
-          [ 'HTTPService success: GET http://someurl, timing:33ms, status:200' ]
-        ]
+    it "http success", (done)->
+      nock("http://someurl")
+        .get("/")
+        .reply(200, {
+          message:"response"
+        })
 
-        done()
+      @HTTPService
+        .get("http://someurl")
+        .promise().then (res)=>
+          expect(@Logger.recorded.log).to.deep.equal  [
+            [ 'HTTPService attempting: GET http://someurl' ],
+            [ 'HTTPService success: GET http://someurl, timing:33ms, status:200' ]
+          ]
 
-  it "http error",(done)->
-    nock("http://someurl")
-      .get("/")
-      .reply(400, {
-        message:"response"
-      })
+          done()
 
-    @HTTPService
-      .get("http://someurl")
-      .promise().catch (e)=>
-        expect(@Logger.recorded).to.deep.equal  {
-          log: [ [ 'HTTPService attempting: GET http://someurl' ] ],
-          error:
-           [ [ 'HTTPService error: GET http://someurl, timing:33ms, status:400',
-               'Validation Error' ] ]
-        }
+    it "http error",(done)->
+      nock("http://someurl")
+        .get("/")
+        .reply(400, {
+          message:"response"
+        })
 
-        done()
+      @HTTPService
+        .get("http://someurl")
+        .promise().catch (e)=>
+          expect(@Logger.recorded).to.deep.equal  {
+            log: [ [ 'HTTPService attempting: GET http://someurl' ] ],
+            error:
+             [ [ 'HTTPService error: GET http://someurl, timing:33ms, status:400',
+                 'Validation Error' ] ]
+          }
+
+          done()

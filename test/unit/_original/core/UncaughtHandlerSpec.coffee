@@ -1,22 +1,24 @@
-describe "UncaughtHandler Original", ->
+describe "Original", ->
 
-  beforeEach ->
-    @mockProcess =
-      on:(@event, @errorFn)=>
-      exit:(@exitCode)=>
+  describe "UncaughtHandler", ->
 
-    ioc = injector()
-    ioc.addDependency("nodeProcess", @mockProcess, true)
-    ioc.inject (@UncaughtHandler, @Logger)=>
+    beforeEach ->
+      @mockProcess =
+        on:(@event, @errorFn)=>
+        exit:(@exitCode)=>
 
-      @Logger.useRecorder()
+      ioc = injector()
+      ioc.addDependency("nodeProcess", @mockProcess, true)
+      ioc.inject (@UncaughtHandler, @Logger)=>
 
-  it "should exist", ->
-    expect(@UncaughtHandler).to.exist
+        @Logger.useRecorder()
 
-  it "should listen and process uncaughtException", ->
-    @UncaughtHandler.listen()
-    expect(@event).to.equal "uncaughtException"
-    @errorFn(new Error("Oops!"))
-    expect(@Logger.recorded.error[0][0].message).to.equal "Oops!"
-    expect(@exitCode).to.equal 0
+    it "should exist", ->
+      expect(@UncaughtHandler).to.exist
+
+    it "should listen and process uncaughtException", ->
+      @UncaughtHandler.listen()
+      expect(@event).to.equal "uncaughtException"
+      @errorFn(new Error("Oops!"))
+      expect(@Logger.recorded.error[0][0].message).to.equal "Oops!"
+      expect(@exitCode).to.equal 0
