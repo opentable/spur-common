@@ -63,20 +63,20 @@ describe "Utils Original", ->
       done()
 
   it 'readFile()', ->
-    filePath = @path.join(__dirname, "../../", "fixtures/data/readFileTest.json")
+    filePath = @path.join(__dirname, "../../../", "fixtures/data/readFileTest.json")
     @Utils.readFile(filePath)
       .done (data)->
         expect(data).to.equal('{\n  "what": "test",\n  "year": 2015\n}\n')
 
   it 'readJsonFile()', ->
-    filePath = @path.join(__dirname, "../../", "fixtures/data/readFileTest.json")
+    filePath = @path.join(__dirname, "../../../", "fixtures/data/readFileTest.json")
     @Utils.readJsonFile(filePath)
       .done (data)->
         expect(data.what).to.equal("test")
         expect(data.year).to.equal(2015)
 
   it 'readJsonFile() with JSON parse error', (done)->
-    filePath = @path.join(__dirname, "../../", "fixtures/data/readFileWithError.json")
+    filePath = @path.join(__dirname, "../../../", "fixtures/data/readFileWithError.json")
     @Utils.readJsonFile(filePath)
       .catch (error)->
         expect(error.message).to.contain("Error Parsing JSON")
