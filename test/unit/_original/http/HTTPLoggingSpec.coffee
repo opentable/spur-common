@@ -1,22 +1,18 @@
-nock = require "nock"
-
 describe "Original", ->
 
   describe "HTTPLogging", ->
 
     beforeEach ->
-      injector().inject (@HTTPService, @Timer, @HTTPPlugin, @HTTPLogging, @Logger)=>
-
-      @Timer.mockDuration(33)
-
-      @HTTPService.setGlobalPlugins([@HTTPLogging])
-
-      @Logger.useRecorder()
-
       nock.disableNetConnect()
+
+      injector().inject (@HTTPService, @Timer, @HTTPPlugin, @HTTPLogging, @Logger)=>
+        @Timer.mockDuration(33)
+        @HTTPService.setGlobalPlugins([@HTTPLogging])
+        @Logger.useRecorder()
 
     afterEach ->
       nock.cleanAll()
+      nock.enableNetConnect()
 
     it "should exist", ->
       expect(@HTTPService).to.exist

@@ -1,4 +1,3 @@
-nock = require "nock"
 _    = require "lodash"
 
 describe "Original", ->
@@ -6,19 +5,19 @@ describe "Original", ->
   describe "HTTPService", ->
 
     beforeEach ->
-      injector().inject (@HTTPService, @Timer, @HTTPPlugin, @HTTPTiming)=>
-
-      @mockDuration = 33
-      @Timer.mockDuration(@mockDuration)
-
       nock.disableNetConnect()
 
-      @containsText = (text, arr)->
-        _.every arr, (expectedText)->
-          text.indexOf(expectedText) > -1
+      injector().inject (@HTTPService, @Timer, @HTTPPlugin, @HTTPTiming)=>
+        @mockDuration = 33
+        @Timer.mockDuration(@mockDuration)
+
+        @containsText = (text, arr)->
+          _.every arr, (expectedText)->
+            text.indexOf(expectedText) > -1
 
     afterEach ->
       nock.cleanAll()
+      nock.enableNetConnect()
 
     it "should exist", ->
       expect(@HTTPService).to.exist
@@ -138,7 +137,6 @@ describe "Original", ->
 
       beforeEach ->
         nock.enableNetConnect()
-        nock.restore()
 
       it "should pass in the headers when using GET", (done)->
         testServer.listen(1234)

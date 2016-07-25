@@ -8,7 +8,10 @@
   },
   "globals": {
     "sinon": true,
-    "injector": true
+    "injector": true,
+    "testServer": true,
+    "nock": true,
+    "_": true
   },
   "rules": {
     "no-unused-expressions": 0,
