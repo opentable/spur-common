@@ -22,10 +22,13 @@
     "dev": "babel --watch src -d lib",
     "lint": "eslint .",
     "pretest": "npm run lint",
-    "test": "babel-node --debug node_modules/mocha/bin/_mocha ./test/",
+    "test-unit": "babel-node --debug node_modules/mocha/bin/_mocha ./test/unit/",
+    "test-integration": "babel-node --debug node_modules/mocha/bin/_mocha ./test/integration/",
+    "test": "npm run unit-test && npm run test-integration",
     "test-watch": "babel-node --debug node_modules/mocha/bin/_mocha --watch ./test/",
-    "precoveralls": "npm run build-and-test",
-    "coveralls": "babel-node node_modules/isparta/bin/isparta cover --report text ./node_modules/mocha/bin/_mocha --report lcovonly ./test/ && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "coverage": "babel-node node_modules/isparta/bin/isparta cover --report text ./node_modules/mocha/bin/_mocha --report lcovonly ./test/unit/",
+    "precoveralls": "npm run build && npm run test-integration",
+    "coveralls": "npm run coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "build-and-test": "npm run build && npm test"
   },
   "bugs": {
