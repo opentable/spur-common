@@ -13,11 +13,14 @@ module.exports = function (path, Promise, fsPromise, FixtureCache, Logger, _) {
     }
 
     get(name) {
-      return this.cache.getOrPromise(name, () => this.readAndProcessFile(name));
+      const fetchCallback = () => this.readAndProcessFile(name);
+      const returnPromise = this.cache.getOrPromise(name, fetchCallback);
+      return returnPromise;
     }
 
     readAndProcessFile(name) {
-      return this.startFileRead(name).then(this.processText);
+      return this.startFileRead(name)
+        .then(this.processText);
     }
 
     startFileRead(name) {
@@ -31,9 +34,7 @@ module.exports = function (path, Promise, fsPromise, FixtureCache, Logger, _) {
 
       return fsPromise
         .readFileAsync(filePath, { encoding: 'utf8' })
-        .catch(() => {
-          Promise.reject(new Error(`${filePath} not found`));
-        });
+        .catch(() => Promise.reject(new Error(`${filePath} not found`)));
     }
 
     processText(text) {
