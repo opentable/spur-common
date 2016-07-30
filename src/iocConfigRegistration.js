@@ -14,6 +14,7 @@ function iocConfigRegistration(ioc, folderPath, configNameArg) {
 
     ioc.registerDependencies(dependencies);
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error('Error registering config', e);
     throw e;
   }

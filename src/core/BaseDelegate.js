@@ -43,6 +43,8 @@ module.exports = function (_, console, consoleColors) {
 
     consoleDelegate(methodName, args) {
       const prefix = this.getColoredLabel(methodName);
+
+      // eslint-disable-next-line no-console
       return console.log.apply(console, [prefix].concat(args));
     }
 
