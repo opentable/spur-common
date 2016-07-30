@@ -24,10 +24,6 @@ describe('HTTPService', () => {
     nock.enableNetConnect();
   });
 
-  it('should exist', function () {
-    expect(this.HTTPService).to.exist;
-  });
-
   it('http success', function (done) {
     nock('http://someurl')
     .get('/')
