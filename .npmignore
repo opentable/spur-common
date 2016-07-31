@@ -8,3 +8,5 @@
 
 /test
 /coverage
+.DS_Store*
+.idea/

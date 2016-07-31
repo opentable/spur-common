@@ -4,7 +4,7 @@ module.exports = function (Promise, SpurErrors) {
   const validateFn = Promise.promisify(joi.validate);
 
   joi.validateAsync = function (...args) {
-    validateFn.apply(joi, args)
+    return validateFn.apply(joi, args)
       .catch((e) => {
         const error = SpurErrors.ValidationError
           .create(e.message)
