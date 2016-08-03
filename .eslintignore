@@ -1,5 +1,6 @@
-lib/**/*.js
+dist/
+lib/
+coverage/*
 test/fixtures/**/*.js
 test/generated/*.js
 test/generated/**/*.js
-coverage/*

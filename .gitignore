@@ -1,12 +1,13 @@
 *.log
 *.pid
 *.seed
-.DS_Store*
+
 .idea/
 .sass-cache/
 .lock-wscript/
 node_modules/
 bower_components/
 /coverage
+/dist
 /lib
-.idea/
+.DS_Store*
