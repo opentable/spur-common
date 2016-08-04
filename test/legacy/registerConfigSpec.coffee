@@ -1,4 +1,4 @@
-registerConfig = require "../../../registerConfig"
+registerConfig = require "../../src/iocConfigRegistration"
 path           = require "path"
 
 describe "Original", ->
@@ -7,7 +7,7 @@ describe "Original", ->
 
     it "default configName", ->
       ioc = injector()
-      configPath = path.join(__dirname, "../../fixtures/config")
+      configPath = path.join(__dirname, "../fixtures/config")
       registerConfig(ioc, configPath)
 
       ioc.inject (config, configLoader)->
@@ -20,7 +20,7 @@ describe "Original", ->
 
     it "specified configName", ->
       ioc = injector()
-      configPath = path.join(__dirname, "../../fixtures/config")
+      configPath = path.join(__dirname, "../fixtures/config")
       registerConfig(ioc, configPath, "alphaConfig")
 
       ioc.inject (alphaConfig, alphaConfigLoader)->
@@ -33,7 +33,7 @@ describe "Original", ->
 
     it "errors", ->
       ioc = injector()
-      configPath = path.join(__dirname, "../../fixtures/config2")
+      configPath = path.join(__dirname, "../fixtures/config2")
       expect(->
         console.log "===== EXPECTED ERROR BELOW ====="
         registerConfig(ioc, configPath, "alphaConfig")
