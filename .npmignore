@@ -6,7 +6,6 @@
 /.travis.yml
 /.npmignore
 
-/test
 /coverage
 .DS_Store*
 .idea/
