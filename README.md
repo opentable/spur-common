@@ -65,14 +65,14 @@ module.exports = function(){
 ```javascript
 var injector = require("./src/injector");
 
-injector().inject(function(UncaughtHander, Logger){
+injector().inject(function(UncaughtHandler, Logger){
 
   Logger.info("Starting app...");
 
   // Here you would inject your dependencies like WebServer or runtime class and start it.
 
-  // Enabled the UncaughtHander
-  UncaughtHander.listen();
+  // Enabled the UncaughtHandler
+  UncaughtHandler.listen();
 
 });
 ```
