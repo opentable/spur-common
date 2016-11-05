@@ -1,7 +1,7 @@
 {
   "name": "spur-common",
   "description": "A Node.JS library of common modules used as a base to most Node.JS applications.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "main": "lib/injector",
   "jsnext:main": "./src/injector",
   "author": {
