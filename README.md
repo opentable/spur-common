@@ -4,7 +4,6 @@ A [Node.js](http://nodejs.org/) library of common modules used to create common 
 
 [![NPM version](https://badge.fury.io/js/spur-common.png)](http://badge.fury.io/js/spur-common)
 [![Build Status](https://travis-ci.org/opentable/spur-common.png?branch=master)](https://travis-ci.org/opentable/spur-common) [![Dependencies](https://david-dm.org/opentable/spur-common.svg)](https://david-dm.org/opentable/spur-common)
-[![Coverage Status](https://coveralls.io/repos/github/opentable/spur-common/badge.svg?branch=master)](https://coveralls.io/github/opentable/spur-common?branch=master)
 
 # About the Spur Framework
 
