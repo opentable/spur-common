@@ -48,10 +48,10 @@ describe('Integration', () => {
     });
 
     describe('versions', () => {
-      it('should be using lodash 3.x', function () {
+      it('should be using lodash 4.x', function () {
         this.ioc.inject((_) => {
           const result = Number(_.VERSION.split('.')[0]);
-          expect(result).to.equal(3);
+          expect(result).to.equal(4);
         });
       });
 
