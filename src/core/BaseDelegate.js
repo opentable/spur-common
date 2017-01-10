@@ -50,11 +50,12 @@ module.exports = function (_, console, consoleColors) {
 
     getColoredLabel(methodName) {
       const label = `${this.constructor.name}#${methodName}: `;
+      const checkMethodType = (item) => item === methodName;
       let color = 'cyan';
 
-      if (_.contains(['fatal', 'error'], methodName)) {
+      if (_.some(['fatal', 'error'], checkMethodType)) {
         color = 'red';
-      } else if (_.contains(['warn'], methodName)) {
+      } else if (_.some(['warn'], checkMethodType)) {
         color = 'yellow';
       }
 
