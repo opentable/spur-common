@@ -1,4 +1,4 @@
-module.exports = function (BaseDelegate, winston) {
+module.exports = function (BaseDelegate) {
   class Logger extends BaseDelegate {
 
     constructor() {
@@ -14,13 +14,6 @@ module.exports = function (BaseDelegate, winston) {
         'verbose'
       ]);
     }
-
-    // TODO: evaluate if this should be in common
-    useWinston() {
-      winston.cli();
-      this.use(winston);
-    }
-
   }
 
   return new Logger();
