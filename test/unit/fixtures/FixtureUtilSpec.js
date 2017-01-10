@@ -1,4 +1,4 @@
-describe.only('FixtureUtil', () => {
+describe('FixtureUtil', () => {
   beforeEach(function () {
     injector()
     .inject((FixtureUtil, FixtureCache, path, Logger) => {
