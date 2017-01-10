@@ -1,4 +1,4 @@
-describe('FixtureUtil', () => {
+describe.only('FixtureUtil', () => {
   beforeEach(function () {
     injector()
     .inject((FixtureUtil, FixtureCache, path, Logger) => {
@@ -54,7 +54,7 @@ describe('FixtureUtil', () => {
     this.FixtureUtil.setFixturesPath(this.expectedFixturesPath);
     const missingPath = this.path.join(this.expectedFixturesPath, 'missingFileName.json');
     this.FixtureUtil.readAndProcessFile('missingFileName')
-    .error((reason) => {
+    .catch((reason) => {
       expect(reason.message).to.equal(`${missingPath} not found`);
       done();
     });
