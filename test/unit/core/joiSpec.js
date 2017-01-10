@@ -45,7 +45,7 @@ describe('joi', () => {
 
   it('should reject invalid data through async', function (done) {
     this.joi.validateAsync(this.invalidData, this.schema)
-    .error((error) => {
+    .catch((error) => {
       expect(error.message).to.deep.equal('username is required');
       done();
     });
