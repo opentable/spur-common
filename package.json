@@ -45,8 +45,7 @@
     "spur-config": "^1.0.0",
     "spur-errors": "^0.2.1",
     "spur-ioc": "^0.2.1",
-    "superagent": "^3.3.1",
-    "winston": "^0.8.3"
+    "superagent": "^3.3.1"
   },
   "devDependencies": {
     "babel-cli": "^6.5.1",
