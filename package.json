@@ -41,7 +41,7 @@
     "form-data": "^0.2.0",
     "joi": "^5.1.0",
     "lodash": "^4.17.4",
-    "moment-timezone": "^0.3.0",
+    "moment-timezone": "^0.5.11",
     "spur-config": "^1.0.0",
     "spur-errors": "^0.2.1",
     "spur-ioc": "^0.2.1",
