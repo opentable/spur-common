@@ -1,7 +1,7 @@
 {
   "name": "spur-common",
   "description": "A Node.JS library of common modules used as a base to most Node.JS applications.",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "main": "lib/injector",
   "jsnext:main": "./src/injector",
   "author": {
@@ -9,7 +9,8 @@
     "email": "agustin@colchado.com"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org"
+    "registry": "https://registry.npmjs.org",
+    "tag": "next"
   },
   "keywords": [
     "spur",
