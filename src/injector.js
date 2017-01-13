@@ -6,7 +6,6 @@ import Promise from 'bluebird';
 import fs from 'fs';
 import path from 'path';
 import SpurErrors from 'spur-errors';
-import winston from 'winston';
 import moment from 'moment-timezone';
 import superagent from 'superagent';
 import FormData from 'form-data';
@@ -21,7 +20,6 @@ function dependencyRegistration() {
     fs,
     path,
     SpurErrors,
-    winston,
     moment,
     superagent,
     FormData,

@@ -8,6 +8,12 @@
     "name": "Agustin Colchado",
     "email": "agustin@colchado.com"
   },
+  "contributors": [
+    {
+      "name": "Danielle Blank",
+      "email": "dgdblank@gmail.com"
+    }
+  ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
@@ -35,18 +41,20 @@
     "type": "git",
     "url": "git://github.com/opentable/spur-common.git"
   },
+  "engines": {
+    "node": ">=4.0.0"
+  },
   "dependencies": {
-    "spur-ioc": "^0.2.1",
-    "spur-errors": "^0.2.1",
+    "bluebird": "^3.4.7",
+    "colors": "1.1.0",
+    "form-data": "^2.1.2",
+    "joi": "^10.1.0",
+    "lodash": "^4.17.4",
+    "moment-timezone": "^0.5.11",
     "spur-config": "^1.0.0",
-    "lodash": "^3.0.0",
-    "bluebird": "^2.9.3",
-    "winston": "^0.8.3",
-    "superagent": "^1.7.2",
-    "moment-timezone": "^0.3.0",
-    "form-data": "^0.2.0",
-    "joi": "^5.1.0",
-    "colors": "1.1.0"
+    "spur-errors": "^0.2.1",
+    "spur-ioc": "^0.2.1",
+    "superagent": "^3.3.1"
   },
   "devDependencies": {
     "babel-cli": "^6.5.1",

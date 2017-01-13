@@ -36,7 +36,6 @@ module.exports = function (superagent, Promise, _, FormData, HTTPResponseProcess
     if (self.tags == null) { self.tags = {}; }
 
     this._plugins = (this._plugins || []).concat(superagent.globalPlugins);
-
     this._pluginInstances = _.compact(_.map(this._plugins, (p) => p.start(self)));
 
     return new Promise((resolve, reject) => {
@@ -52,7 +51,7 @@ module.exports = function (superagent, Promise, _, FormData, HTTPResponseProcess
           resolve(res);
         }
 
-        return _.invoke(self._pluginInstances, 'end');
+        return _.invokeMap(self._pluginInstances, 'end');
       });
     });
   };
@@ -100,7 +99,7 @@ module.exports = function (superagent, Promise, _, FormData, HTTPResponseProcess
 
   superagent.setGlobalPlugins = function (plugins) {
     if (_.isArray(plugins)) {
-      superagent.globalPlugins = _.unique(_.union(superagent.globalPlugins, plugins));
+      superagent.globalPlugins = _.uniq(_.union(superagent.globalPlugins, plugins));
       return superagent.globalPlugins;
     }
 
@@ -110,7 +109,8 @@ module.exports = function (superagent, Promise, _, FormData, HTTPResponseProcess
   superagent.getGlobalPlugins = () => superagent.globalPlugins;
 
   superagent.addGlobalPlugin = function (plugin) {
-    if (!_.contains(superagent.globalPlugins, plugin)) {
+    const checkPluginExists = (pluginOpt) => pluginOpt === plugin;
+    if (!_.some(superagent.globalPlugins, checkPluginExists)) {
       superagent.globalPlugins.push(plugin);
     }
 
