@@ -1,16 +1,21 @@
 {
   "name": "spur-common",
   "description": "A Node.JS library of common modules used as a base to most Node.JS applications.",
-  "version": "1.0.0-rc.2",
+  "version": "0.3.1",
   "main": "lib/injector",
   "jsnext:main": "./src/injector",
   "author": {
     "name": "Agustin Colchado",
     "email": "agustin@colchado.com"
   },
+  "contributors": [
+    {
+      "name": "Danielle Blank",
+      "email": "dgdblank@gmail.com"
+    }
+  ],
   "publishConfig": {
-    "registry": "https://registry.npmjs.org",
-    "tag": "next"
+    "registry": "https://registry.npmjs.org"
   },
   "keywords": [
     "spur",
@@ -35,6 +40,9 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/opentable/spur-common.git"
+  },
+  "engines": {
+    "node": ">=4.0.0"
   },
   "dependencies": {
     "bluebird": "^3.4.7",
