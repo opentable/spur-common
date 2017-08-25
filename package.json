@@ -28,9 +28,8 @@
     "lint": "eslint .",
     "pretest": "npm run lint",
     "test-unit": "babel-node --debug node_modules/mocha/bin/_mocha ./test/unit/",
-    "test-unit-legacy": "babel-node --debug node_modules/mocha/bin/_mocha ./test/legacy/",
     "test-integration": "babel-node --debug node_modules/mocha/bin/_mocha ./test/integration/",
-    "test": "npm run test-unit && npm run test-unit-legacy && npm run test-integration",
+    "test": "npm run test-unit && npm run test-integration",
     "build-and-test": "npm run build && npm test"
   },
   "bugs": {
