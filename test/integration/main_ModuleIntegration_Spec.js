@@ -13,12 +13,11 @@ describe('Integration', () => {
 
     describe('base dependencies', () => {
       it('base module dependencies are injectable', function () {
-        this.ioc.inject(function (Promise, fs, path, SpurErrors, moment, superagent, FormData, consoleColors) {
+        this.ioc.inject(function (Promise, fs, path, SpurErrors, superagent, FormData, consoleColors) {
           expect(Promise).to.exist;
           expect(fs).to.exist;
           expect(path).to.exist;
           expect(SpurErrors).to.exist;
-          expect(moment).to.exist;
           expect(superagent).to.exist;
           expect(FormData).to.exist;
           expect(consoleColors).to.exist;
@@ -44,13 +43,5 @@ describe('Integration', () => {
       });
     });
 
-    describe('versions', () => {
-      it('should be using moment 2.x', function () {
-        this.ioc.inject(function (moment) {
-          const result = Number(moment.version.split('.')[0]);
-          expect(result).to.equal(2);
-        });
-      });
-    });
   });
 });
