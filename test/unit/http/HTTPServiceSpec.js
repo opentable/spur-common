@@ -1,17 +1,19 @@
 describe('HTTPService', () => {
+  const base = this;
+
   beforeEach(function () {
     nock.disableNetConnect();
 
-    injector().inject((HTTPService, Timer, HTTPPlugin, HTTPTiming) => {
-      this.HTTPService = HTTPService;
-      this.Timer = Timer;
-      this.HTTPPlugin = HTTPPlugin;
-      this.HTTPTiming = HTTPTiming;
+    injector().inject(function (HTTPService, Timer, HTTPPlugin, HTTPTiming) {
+      base.HTTPService = HTTPService;
+      base.Timer = Timer;
+      base.HTTPPlugin = HTTPPlugin;
+      base.HTTPTiming = HTTPTiming;
 
-      this.mockDuration = 33;
-      this.Timer.mockDuration(this.mockDuration);
+      base.mockDuration = 33;
+      base.Timer.mockDuration(base.mockDuration);
 
-      this.containsText = (text, arr) => {
+      base.containsText = (text, arr) => {
         return _.every(arr, (expectedText) => {
           return text.indexOf(expectedText) > -1;
         });
@@ -29,28 +31,28 @@ describe('HTTPService', () => {
     .get('/')
     .reply(200, { message: 'response' });
 
-    this.HTTPService.setGlobalPlugins([this.HTTPTiming]);
+    base.HTTPService.setGlobalPlugins([base.HTTPTiming]);
 
     // Testing against dupe add
-    this.HTTPService.setGlobalPlugins([this.HTTPTiming]);
+    base.HTTPService.setGlobalPlugins([base.HTTPTiming]);
 
     const logs = [];
 
-    class HTTPLogging extends this.HTTPPlugin {
+    class HTTPLogging extends base.HTTPPlugin {
       start() {}
       end() {
         logs.push(this.request.name, this.request.url);
       }
     }
 
-    class HTTPFakePlugin extends this.HTTPPlugin {
+    class HTTPFakePlugin extends base.HTTPPlugin {
       start() {}
       end() {}
     }
 
-    this.HTTPService.addGlobalPlugin(HTTPFakePlugin);
+    base.HTTPService.addGlobalPlugin(HTTPFakePlugin);
 
-    this.HTTPService
+    base.HTTPService
     .get('http://someurl')
     .named('LoginService')
     .tagged({ endpoint: 'EndpointName', tag2: 'Some tag value' })
@@ -59,10 +61,10 @@ describe('HTTPService', () => {
     .then((res) => {
       expect(res.request.name).to.equal('LoginService');
       expect(res.request.tags).to.deep.equal({ endpoint: 'EndpointName', tag2: 'Some tag value' });
-      expect(res.request.duration).to.equal(this.mockDuration);
+      expect(res.request.duration).to.equal(base.mockDuration);
       expect(logs).to.deep.equal(['LoginService', 'http://someurl']);
-      expect(this.HTTPService.getGlobalPlugins()).to.deep.contain(HTTPFakePlugin);
-      expect(this.HTTPService.getGlobalPlugins().length).to.equal(2);
+      expect(base.HTTPService.getGlobalPlugins()).to.deep.contain(HTTPFakePlugin);
+      expect(base.HTTPService.getGlobalPlugins().length).to.equal(2);
       done();
     });
   });
@@ -74,14 +76,14 @@ describe('HTTPService', () => {
 
     const logs = [];
 
-    class HTTPLogging extends this.HTTPPlugin {
+    class HTTPLogging extends base.HTTPPlugin {
       start() {}
       end() {
         logs.push(this.request.name, this.request.url, this.request.error.data);
       }
     }
 
-    this.HTTPService
+    base.HTTPService
     .get('http://someurl')
     .named('LoginService')
     .plugin(HTTPLogging)
@@ -102,14 +104,14 @@ describe('HTTPService', () => {
 
     const logs = [];
 
-    class HTTPLogging extends this.HTTPPlugin {
+    class HTTPLogging extends base.HTTPPlugin {
       start() {}
       end() {
         logs.push(this.request.name, this.request.url, this.request.error.data);
       }
     }
 
-    this.HTTPService
+    base.HTTPService
     .get('http://someurl')
     .named('LoginService')
     .plugin(HTTPLogging)
@@ -125,18 +127,18 @@ describe('HTTPService', () => {
 
   it('http append file', function (done) {
     nock('http://someurl')
-    .filteringRequestBody((requestBody) => { this.requestBody = requestBody; })
+    .filteringRequestBody((requestBody) => { base.requestBody = requestBody; })
     .post('/')
     .reply(200);
 
-    this.HTTPService.post('http://someurl/')
+    base.HTTPService.post('http://someurl/')
     .appendFile('file', new Buffer('hello world'), {
       filename: 'hello.json',
       contentType: 'application/json'
     })
     .promise()
     .then(() => {
-      const valid = this.containsText(this.requestBody, [
+      const valid = base.containsText(base.requestBody, [
         'Content-Disposition: form-data; name="file"; filename="hello.json"',
         'Content-Type: application/json',
         'hello world'
@@ -154,7 +156,7 @@ describe('HTTPService', () => {
     it('should pass in the headers when using GET', function (done) {
       testServer.listen(1234);
 
-      this.HTTPService
+      base.HTTPService
       .get('http://localhost:1234/get-me')
       .set('spur-http-header', 'spur-http-header-value')
       .promise()
@@ -169,7 +171,7 @@ describe('HTTPService', () => {
     it('should pass in the headers when using POST', function (done) {
       testServer.listen(1234);
 
-      this.HTTPService
+      base.HTTPService
       .post('http://localhost:1234/get-me')
       .set('spur-http-header', 'spur-http-header-value')
       .promise()

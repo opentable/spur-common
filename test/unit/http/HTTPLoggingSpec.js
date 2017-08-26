@@ -1,17 +1,19 @@
 describe('HTTPLogging', () => {
+  const base = this;
+
   beforeEach(function () {
     nock.disableNetConnect();
 
-    injector().inject((HTTPService, Timer, HTTPPlugin, HTTPLogging, Logger) => {
-      this.HTTPService = HTTPService;
-      this.Timer = Timer;
-      this.HTTPPlugin = HTTPPlugin;
-      this.HTTPLogging = HTTPLogging;
-      this.Logger = Logger;
+    injector().inject(function (HTTPService, Timer, HTTPPlugin, HTTPLogging, Logger) {
+      base.HTTPService = HTTPService;
+      base.Timer = Timer;
+      base.HTTPPlugin = HTTPPlugin;
+      base.HTTPLogging = HTTPLogging;
+      base.Logger = Logger;
 
-      this.Timer.mockDuration(33);
-      this.HTTPService.setGlobalPlugins([this.HTTPLogging]);
-      this.Logger.useRecorder();
+      base.Timer.mockDuration(33);
+      base.HTTPService.setGlobalPlugins([base.HTTPLogging]);
+      base.Logger.useRecorder();
     });
   });
 
@@ -21,7 +23,7 @@ describe('HTTPLogging', () => {
   });
 
   it('should exist', function () {
-    expect(this.HTTPService).to.exist;
+    expect(base.HTTPService).to.exist;
   });
 
   it('http success', function (done) {
@@ -29,10 +31,10 @@ describe('HTTPLogging', () => {
       .get('/')
       .reply(200, { message: 'response' });
 
-    this.HTTPService
+    base.HTTPService
       .get('http://someurl')
       .promise().then(() => {
-        expect(this.Logger.recorded.log).to.deep.equal([
+        expect(base.Logger.recorded.log).to.deep.equal([
           ['HTTPService attempting: GET http://someurl'],
           ['HTTPService success: GET http://someurl, timing:33ms, status:200']
         ]);
@@ -46,11 +48,11 @@ describe('HTTPLogging', () => {
       .get('/')
       .reply(400, { message: 'response' });
 
-    this.HTTPService
+    base.HTTPService
     .get('http://someurl')
     .promise()
     .catch(() => {
-      expect(this.Logger.recorded).to.deep.equal({
+      expect(base.Logger.recorded).to.deep.equal({
         log: [['HTTPService attempting: GET http://someurl']],
         error: [['HTTPService error: GET http://someurl, timing:33ms, status:400', 'Validation Error']]
       });

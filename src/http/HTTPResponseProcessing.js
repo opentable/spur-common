@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 module.exports = function (SpurErrors, _) {
   class HTTPResponseProcessing {
 

@@ -1,50 +1,52 @@
 describe('joi', () => {
+  const base = this;
+
   beforeEach(function () {
     injector()
-    .inject((joi) => {
-      this.joi = joi;
-      this.schemaDefinition = {
-        username: this.joi.string()
+    .inject(function (joi) {
+      base.joi = joi;
+      base.schemaDefinition = {
+        username: base.joi.string()
           .alphanum()
           .min(3)
           .max(30)
           .required(),
-        password: this.joi.string().regex(/^[a-zA-Z0-9]{3,30}$/),
-        access_token: [this.joi.string(), this.joi.number()],
-        birthyear: this.joi.number()
+        password: base.joi.string().regex(/^[a-zA-Z0-9]{3,30}$/),
+        access_token: [base.joi.string(), base.joi.number()],
+        birthyear: base.joi.number()
           .integer()
           .min(1900)
           .max(2013),
-        email: this.joi.string().email()
+        email: base.joi.string().email()
       };
-      this.schema = joi.object()
-        .keys(this.schemaDefinition)
+      base.schema = joi.object()
+        .keys(base.schemaDefinition)
         .with('username', 'birthyear')
         .without('password', 'access_token');
 
-      this.validData = { username: 'abc', birthyear: 1994 };
-      this.invalidData = { birthyear: 2016 };
+      base.validData = { username: 'abc', birthyear: 1994 };
+      base.invalidData = { birthyear: 2016 };
     });
   });
 
   it('should validate with sync', function (done) {
-    this.joi.validate(this.validData, this.schema, (err, value) => {
+    base.joi.validate(base.validData, base.schema, (err, value) => {
       expect(err).to.equal(null);
-      expect(value).to.deep.equal(this.validData);
+      expect(value).to.deep.equal(base.validData);
       done();
     });
   });
 
   it('should validate with async', function (done) {
-    this.joi.validateAsync(this.validData, this.schema)
+    base.joi.validateAsync(base.validData, base.schema)
     .then((data) => {
-      expect(data).to.deep.equal(this.validData);
+      expect(data).to.deep.equal(base.validData);
       done();
     });
   });
 
   it('should reject invalid data through async', function (done) {
-    this.joi.validateAsync(this.invalidData, this.schema)
+    base.joi.validateAsync(base.invalidData, base.schema)
     .catch((error) => {
       expect(error.data[0].message).to.deep.equal('"username" is required');
       done();

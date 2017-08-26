@@ -8,7 +8,7 @@ global.nock = require('nock');
 global._ = require('lodash');
 
 global.srcDir = path.resolve(__dirname, '../src');
-global.injector = require(path.join(__dirname, 'fixtures', 'injector.coffee'));
+global.injector = require(path.join(__dirname, 'fixtures', 'injector.js'));
 global.testServer = require(path.join(__dirname, 'fixtures', 'server.js'));
 
 process.env.NODE_ENV = 'test';

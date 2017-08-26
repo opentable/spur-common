@@ -34,22 +34,21 @@ $ npm install spur-common --save
 #### `src/injector.js`
 
 ```javascript
-var spur       = require("spur-ioc");
-var spurCommon = require("spur-common");
+const spur       = require('spur-ioc');
+const spurCommon = require('spur-common');
 
 module.exports = function(){
 
   // define a  new injector
-  var ioc = spur.create("demo");
+  const ioc = spur.create('demo');
 
   // register already constructed objects such as globals
   ioc.registerDependencies({
-    ...
   });
 
   // register folders in your project to be autoinjected
   ioc.registerFolders(__dirname, [
-    "demo"
+    'demo/'
   ]);
 
   // THIS IS THE IMPORTANT PART: Merge the spur-common dependencies to your local container
@@ -62,11 +61,11 @@ module.exports = function(){
 #### `start.js`
 
 ```javascript
-var injector = require("./src/injector");
+const injector = require('./src/injector');
 
-injector().inject(function(UncaughtHandler, Logger){
+injector().inject(function (UncaughtHandler, Logger) {
 
-  Logger.info("Starting app...");
+  Logger.info('Starting app...');
 
   // Here you would inject your dependencies like WebServer or runtime class and start it.
 
@@ -78,7 +77,7 @@ injector().inject(function(UncaughtHandler, Logger){
 
 # Available dependencies in injector
 
-To see the latest list of the default dependencies that are injected, check out the [injector.coffee](src/injector.coffee) file. Here is a short list of of all of the dependencies available:
+To see the latest list of the default dependencies that are injected, check out the [injector.js](src/injector.js) file. Here is a short list of of all of the dependencies available:
 
 ### System dependencies
 
@@ -111,14 +110,14 @@ All of the files under the `src/` directory are made available when this module 
 
 | Name                | Source                                  | Description                                                                                                                                                                                                  |
 | :----               | :----                                   | :----                                                                                                                                                                                                        |
-| **BaseDelegate**    | [code](src/core/BaseDelegate.coffee)    | A utility class used to create classes with delegates that can be allow us to replace implementations dynamically and allow for plugins. For an example, take a look at [Logger](src/logging/Logger.coffee). |
-| **UncaughtHandler** | [code](src/core/UncaughtHandler.coffee) | Simple module that catches uncaught errors when initialized.                                                                                                                                                 |
-| **FixtureUtil**     | [code](src/fixtures/FixtureUtil.coffee) | Fixtures util that allows you to read test files from a specific directory.                                                                                                                                  |
-| **HTTPService**     | [code](src/http/HTTPService.coffee)     | An extension of the superagent module to support promises and other nice enhancements to make HTTP requests simpler to process.                                                                              |
-| **Logger**          | [code](src/logging/Logger.coffee)       | An implementation of a logger that extends console.log and makes it so you can add plugins for logging to different sources.                                                                                 |
-| **fsPromise**       | [code](src/promisify/fsPromise.coffee)  | A wrapper for the Node fs module that adds promises to the module.                                                                                                                                           |
-| **DateTimeUtils**   | [code](src/utils/DateTimeUtils.coffee)  | Wrapper of moment that allows ease of mocking for testing.                                                                                                                                                   |
-| **Utils**           | [code](src/utils/Utils.coffee)          | A collection of random utilities.                                                                                                                                                                            |
+| **BaseDelegate**    | [code](src/core/BaseDelegate.js)    | A utility class used to create classes with delegates that can be allow us to replace implementations dynamically and allow for plugins. For an example, take a look at [Logger](src/logging/Logger.js). |
+| **UncaughtHandler** | [code](src/core/UncaughtHandler.js) | Simple module that catches uncaught errors when initialized.                                                                                                                                                 |
+| **FixtureUtil**     | [code](src/fixtures/FixtureUtil.js) | Fixtures util that allows you to read test files from a specific directory.                                                                                                                                  |
+| **HTTPService**     | [code](src/http/HTTPService.js)     | An extension of the superagent module to support promises and other nice enhancements to make HTTP requests simpler to process.                                                                              |
+| **Logger**          | [code](src/logging/Logger.js)       | An implementation of a logger that extends console.log and makes it so you can add plugins for logging to different sources.                                                                                 |
+| **fsPromise**       | [code](src/promisify/fsPromise.js)  | A wrapper for the Node fs module that adds promises to the module.                                                                                                                                           |
+| **DateTimeUtils**   | [code](src/utils/DateTimeUtils.js)  | Wrapper of moment that allows ease of mocking for testing.                                                                                                                                                   |
+| **Utils**           | [code](src/utils/Utils.js)          | A collection of random utilities.                                                                                                                                                                            |
 
 
 # Contributing

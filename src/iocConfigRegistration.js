@@ -1,4 +1,4 @@
-import spurConfig from 'spur-config';
+const spurConfig = require('spur-config');
 
 function iocConfigRegistration(ioc, folderPath, configNameArg) {
   try {
@@ -20,4 +20,4 @@ function iocConfigRegistration(ioc, folderPath, configNameArg) {
   }
 }
 
-export default iocConfigRegistration;
+module.exports = iocConfigRegistration;

@@ -5,9 +5,9 @@ module.exports = function (_, Promise, fsPromise, JSON) {
       _.bindAll(this, ['readFile', 'readJsonFile']);
     }
 
-    prop(prop) { return ob => ob[prop]; }
+    prop(prop) { return (ob) => ob[prop]; }
 
-    extendWith(ob1) { return ob2 => _.extend(ob2, ob1); }
+    extendWith(ob1) { return (ob2) => _.extend(ob2, ob1); }
 
     capitalize(str) {
       if (!str) {

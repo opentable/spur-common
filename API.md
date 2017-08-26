@@ -17,22 +17,19 @@
 
 # API
 
-All of these examples can be involved, so in order to make them a little simpler to read, they are implemented with [coffee-script (documentation)](http://coffeescript.org/).
-
 ## Core
 
 ### BaseDelegate
 
 This class can only be used as a base class in order to extend a simple logger.
 
-```coffeescript
-module.exports = (BaseDelegate)->
+```javascript
+module.exports = function (BaseDelegate) {
 
-  new class ConsoleLogger extends BaseDelegate
+  class ConsoleLogger extends BaseDelegate {
 
-    constructor: ()->
-
-      @supportsMethods [
+    constructor() {
+      this.supportsMethods([
         "fatal"
         "error"
         "warn"
@@ -40,7 +37,13 @@ module.exports = (BaseDelegate)->
         "log"
         "debug"
         "verbose"
-      ]
+      ]);
+    }
+
+  }
+  
+  return new ConsoleLogger();
+}
 ```
 
 #### `Properties`
@@ -66,18 +69,19 @@ module.exports = (BaseDelegate)->
 
 A helper class to measure the duration between the call of `.start()` and `.stop()`.
 
-```coffeescript
-module.exports = (Timer, Logger)->
+```javascript
+module.exports = function (Timer, Logger) {
 
-  timer = new Timer()
-  timer.start()
+  const timer = new Timer();
+  timer.start();
 
-  # Do something to measure
+  // Do something to measure
 
-  timer.stop()
+  timer.stop();
 
-  Logger.log(timer.duration)
+  Logger.log(timer.duration);
 
+}
 ```
 
 #### `Properties`
@@ -104,14 +108,16 @@ module.exports = (Timer, Logger)->
 
 Simple module that catches uncaught errors when initialized. This should be initialized at the start of any Node application.
 
-```coffeescript
-injector = require "./src/injector"
+```javascript
+const injector = require('./src/injector');
 
-injector().inject (UncaughtHandler)->
+injector().inject(function (UncaughtHandler) {
 
-  UncaughtHandler.listen()
+  UncaughtHandler.listen();
 
-  # Set up the rest of the application
+  // Set up the rest of the application
+
+});
 ```
 
 ## Fixtures
@@ -128,31 +134,33 @@ injector().inject (UncaughtHandler)->
 |   +-- restaurant-126.js
 ```
 
-#### `start.coffee`
+#### `start.js`
 
-```coffeescript
-module.exports = (FixtureUtil, path)->
+```javascript
+module.exports = function (FixtureUtil, path) {
 
-  fixturesPath = path.resolve(__dirname, "./fixtures/")
-  FixtureUtil.setFixturesPath(fixturesPath)
+  const fixturesPath = path.resolve(__dirname, './fixtures/');
+  FixtureUtil.setFixturesPath(fixturesPath);
 
+}
 ```
 
-#### `loader.coffee`
+#### `loader.js`
 
-```coffeescript
-module.exports = (FixtureUtil, Logger, JSON)->
+```javascript
+module.exports = function (FixtureUtil, Logger, JSON) {
 
-  restaurantsData = []
-  restaurantsData.push FixtureUtil.get("restaurant-123")
-  restaurantsData.push FixtureUtil.get("restaurant-124")
-  restaurantsData.push FixtureUtil.get("restaurant-125")
-  restaurantsData.push FixtureUtil.get("restaurant-126")
+  const restaurantsData = [];
+  restaurantsData.push(FixtureUtil.get("restaurant-123"));
+  restaurantsData.push(FixtureUtil.get("restaurant-124"));
+  restaurantsData.push(FixtureUtil.get("restaurant-125"));
+  restaurantsData.push(FixtureUtil.get("restaurant-126"));
 
-  Logger.log(JSON.stringify(restaurantsData, null, 2))
+  Logger.log(JSON.stringify(restaurantsData, null, 2));
 
-  # Would echo the objects that were stored in the .json files
+  // Would echo the objects that were stored in the .json files
 
+}
 ```
 
 ## HTTP
@@ -192,47 +200,54 @@ For the full superagent documentation, please visit their [documentation page](h
 
 ##### `Full respose`
 
-```coffeescript
-module.exports = (Logger, JSON)->
+```javascript
+module.exports = function (HTTPService, HTTPLogging, Logger, JSON) {
 
-  @HTTPService
-    .get("http://testserver.com/reservations/123")
-    .named("ReservationsService")
-    .tagged({endpoint: "Get"})
+  HTTPService
+    .get('http://testserver.com/reservations/123')
+    .named('ReservationsService')
+    .tagged({endpoint: 'Get'})
     .plugin(HTTPLogging)
-    .promise().then (res)=>
-      Logger.log("Status Code:", res.statusCode)
-      Logger.log(JSON.stringify(res, null, 2))
+    .promise().then((res)=> {
+      Logger.log('Status Code:', res.statusCode);
+      Logger.log(JSON.stringify(res, null, 2));
+    });
 
+}
 ```
 
 ##### `Unwrap JSON payload`
 
-```coffeescript
-module.exports = (Logger, JSON)->
+```javascript
+module.exports = function (HTTPService, HTTPLogging, Logger, JSON) {
 
-  @HTTPService
-    .get("http://testserver.com/reservations/123")
-    .named("ReservationsService")
-    .tagged({endpoint: "Get"})
+  HTTPService
+    .get('http://testserver.com/reservations/123')
+    .named('ReservationsService')
+    .tagged({endpoint: 'Get'})
     .plugin(HTTPLogging)
-    .promiseBody().then (payload)=>
-      Logger.log(JSON.stringify(payload, null, 2))
+    .promiseBody().then((payload) => {
+      Logger.log(JSON.stringify(payload, null, 2));
+    });
 
+}
 ```
 
 ##### `Unwrap text payload`
 
-```coffeescript
-module.exports = (Logger)->
+```javascript
+module.exports = function (HTTPService, HTTPLogging, Logger) {
 
-  @HTTPService
-    .get("http://testserver.com/reservations/123")
-    .named("ReservationsService")
-    .tagged({endpoint: "Get"})
+  HTTPService
+    .get('http://testserver.com/reservations/123')
+    .named('ReservationsService')
+    .tagged({endpoint: 'Get'})
     .plugin(HTTPLogging)
-    .promiseText().then (text)=>
-      Logger.log("Text:", text)
+    .promiseText().then((text) => {
+      Logger.log('Text:', text);
+    });
+
+}
 ```
 
 ---
@@ -243,17 +258,28 @@ A base class used to specify the interface of an HTTP plugin. The interface is s
 
 ##### Example implementation
 
-```coffeescript
-module.exports = (Timer, HTTPPlugin)->
+```javascript
+module.exports = function (Timer, HTTPPlugin) {
 
-  class HTTPTiming extends HTTPPlugin
+  class HTTPTiming extends HTTPPlugin {
 
-    start:()->
-      @timer = new Timer().start()
+    constructor() {
+      this.timer = new Timer();
+    }
 
-    end:()=>
-      # Add the duration to the request to be used later
-      @request.duration = @timer.stop()
+    start() {
+      this.timer.start();
+    }
+
+    end() {
+      // Add the duration to the request to be used later
+      this.request.duration = this.timer.stop();
+    }
+
+  }
+
+  return HTTPTiming;
+}
 ```
 
 ### HTTPTiming
@@ -263,28 +289,29 @@ When set as a global plugin, it will add a duration of the request to all of the
 ##### Global start script
 
 `Register:`
-```coffeescript
-module.exports = (HTTPService, HTTPTiming)->
+```javascript
+module.exports = function (HTTPService, HTTPTiming) {
+  // Register a single global plugin
+  HTTPService.setGlobalPlugins(HTTPTiming);
 
-  # Register a single global plugin
-  HTTPService.setGlobalPlugins(HTTPTiming)
-
-  # Registers an array of global plugins
-  HTTPService.setGlobalPlugins([HTTPTiming])
-
+  // Registers an array of global plugins
+  HTTPService.setGlobalPlugins([HTTPTiming]);
+}
 ```
 
 `Use from request:`
-```coffeescript
-module.exports = (HTTPService)->
+```javascript
+module.exports = function (HTTPService, HTTPLogging, Logger) {
 
-  @HTTPService
-    .get("http://testserver.com/reservations/123")
+  HTTPService
+    .get('http://testserver.com/reservations/123')
     .plugin(HTTPLogging)
-    .promise().then (response)=>
-      request = response.request
-      Logger.log("Duration:", request.duration)
+    .promise().then((response) => {
+      const request = response.request;
+      Logger.log('Duration:', request.duration);
+    });
 
+}
 ```
 
 ### HTTPLogging
@@ -293,15 +320,16 @@ When set as a global plugin, it will log all of the http requests made with the 
 
 ##### Global start script
 
-```coffeescript
-module.exports = (HTTPService, HTTPLogging)->
+```javascript
+module.exports = function (HTTPService, HTTPLogging) {
 
-  # Register a single global plugin
-  HTTPService.setGlobalPlugins(HTTPLogging)
+  // Register a single global plugin
+  HTTPService.setGlobalPlugins(HTTPLogging);
 
-  # Registers an array of global plugins
-  HTTPService.setGlobalPlugins([HTTPLogging])
+  // Registers an array of global plugins
+  HTTPService.setGlobalPlugins([HTTPLogging]);
 
+}
 ```
 
 ## Logging
@@ -311,30 +339,38 @@ module.exports = (HTTPService, HTTPLogging)->
 A simple logging delegate the defaults to the use of the `console.log`. Through the use of delegates you can add additional functionality. At OpenTable we've created delegates to log to Logstash, but only in production environments and only for some of the supported methods.
 
 ##### Global set of delegate
-```coffeescript
-module.exports = (Logger)->
+```javascript
+module.exports = function (Logger) {
 
-  new class CustomLogger
+  class CustomLogger {
 
-    log: (args...)->
-      # do something
+    log(...args) {
+      // do something
+    }
 
-    info: (args...)->
-      # do something
+    info(...args) {
+      // do something
+    }
 
-    error: (args...)->
-      # do something
+    error(...args) {
+      // do something
+    }
 
-  Logger.use(CustomLogger)
+  }
 
+  const instance = new CustomLogger();
+  Logger.use(instance);
+
+}
 ```
 
 ##### Usage of the custom logger
-```coffeescript
-module.exports = (Logger)->
+```javascript
+module.exports = function (Logger) {
 
-  Logger.log("Hi, I am log")
-  Logger.info("Hi, I am info")
-  Logger.error("Hi, I am error", error)
+  Logger.log('Hi, I am log');
+  Logger.info('Hi, I am info');
+  Logger.error('Hi, I am error', error);
 
+}
 ```
