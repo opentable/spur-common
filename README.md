@@ -95,7 +95,6 @@ List of external dependencies used and exposed by spur-common. They can be found
 
 | Name              | Original Module Name                                             |
 | :----             | :----                                                            |
-| **-**             | [lodash](https://www.npmjs.org/package/lodash)                   |
 | **Promise**       | [bluebird](https://www.npmjs.org/package/bluebird)               |
 | **winston**       | [winston](https://www.npmjs.org/package/winston)                 |
 | **moment**        | [moment-timezone](https://www.npmjs.org/package/moment-timezone) |

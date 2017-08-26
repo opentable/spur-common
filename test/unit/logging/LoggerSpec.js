@@ -1,3 +1,5 @@
+const _last = require('lodash.last');
+
 describe('Logger', () => {
   const base = this;
 
@@ -8,13 +10,12 @@ describe('Logger', () => {
 
     injector()
       .addDependency('console', base.MockLogger, true)
-      .inject(function (Logger, console, _) {
+      .inject(function (Logger, console) {
         base.Logger = Logger;
         base.console = console;
-        base._ = _;
 
         base.getResult = () => {
-          return base._.last(base.console.log.getCalls()).args;
+          return _last(base.console.log.getCalls()).args;
         };
       });
   });

@@ -1,8 +1,10 @@
-module.exports = function (path, Promise, fsPromise, FixtureCache, Logger, _) {
+const _bindAll = require('lodash.bindall');
+
+module.exports = function (path, Promise, fsPromise, FixtureCache, Logger) {
   class FixtureUtil {
 
     constructor(fixturesPath) {
-      _.bindAll(this, ['get', 'readAndProcessFile', 'startFileRead']);
+      _bindAll(this, ['get', 'readAndProcessFile', 'startFileRead']);
       this.fixturesPath = fixturesPath;
       this.cache = FixtureCache;
     }

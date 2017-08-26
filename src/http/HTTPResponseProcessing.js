@@ -1,4 +1,6 @@
-module.exports = function (SpurErrors, _) {
+const _isEmpty = require('lodash.isempty');
+
+module.exports = function (SpurErrors) {
   class HTTPResponseProcessing {
 
     constructor(method, url, response, error) {
@@ -60,7 +62,7 @@ module.exports = function (SpurErrors, _) {
 
     _setErrorData(res) {
       if (this.error) {
-        const errorResponse = _.isEmpty(res.body) ? res.text : res.body;
+        const errorResponse = _isEmpty(res.body) ? res.text : res.body;
         this.error.setData(errorResponse);
       }
     }

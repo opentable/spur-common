@@ -1,13 +1,16 @@
-module.exports = function (_, Promise, fsPromise, JSON) {
+const _bindAll = require('lodash.bindall');
+const _assignIn = require('lodash.assignin');
+
+module.exports = function (Promise, fsPromise, JSON) {
   class Utils {
 
     constructor() {
-      _.bindAll(this, ['readFile', 'readJsonFile']);
+      _bindAll(this, ['readFile', 'readJsonFile']);
     }
 
     prop(prop) { return (ob) => ob[prop]; }
 
-    extendWith(ob1) { return (ob2) => _.extend(ob2, ob1); }
+    extendWith(ob1) { return (ob2) => _assignIn(ob2, ob1); }
 
     capitalize(str) {
       if (!str) {

@@ -1,10 +1,12 @@
-module.exports = function (Promise, _) {
+const _bindAll = require('lodash.bindall');
+
+module.exports = function (Promise) {
   class FixtureCache {
 
     constructor() {
       this.cache = {};
 
-      _.bindAll(this, ['set', 'get', 'getOrPromise', 'setAsync']);
+      _bindAll(this, ['set', 'get', 'getOrPromise', 'setAsync']);
     }
 
     set(key, value) {

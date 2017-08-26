@@ -13,8 +13,7 @@ describe('Integration', () => {
 
     describe('base dependencies', () => {
       it('base module dependencies are injectable', function () {
-        this.ioc.inject(function (_, Promise, fs, path, SpurErrors, moment, superagent, FormData, consoleColors) {
-          expect(_).to.exist;
+        this.ioc.inject(function (Promise, fs, path, SpurErrors, moment, superagent, FormData, consoleColors) {
           expect(Promise).to.exist;
           expect(fs).to.exist;
           expect(path).to.exist;
@@ -46,13 +45,6 @@ describe('Integration', () => {
     });
 
     describe('versions', () => {
-      it('should be using lodash 4.x', function () {
-        this.ioc.inject(function (_) {
-          const result = Number(_.VERSION.split('.')[0]);
-          expect(result).to.equal(4);
-        });
-      });
-
       it('should be using moment 2.x', function () {
         this.ioc.inject(function (moment) {
           const result = Number(moment.version.split('.')[0]);

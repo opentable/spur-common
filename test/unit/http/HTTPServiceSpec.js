@@ -1,3 +1,5 @@
+const _every = require('lodash.every');
+
 describe('HTTPService', () => {
   const base = this;
 
@@ -14,7 +16,7 @@ describe('HTTPService', () => {
       base.Timer.mockDuration(base.mockDuration);
 
       base.containsText = (text, arr) => {
-        return _.every(arr, (expectedText) => {
+        return _every(arr, (expectedText) => {
           return text.indexOf(expectedText) > -1;
         });
       };
