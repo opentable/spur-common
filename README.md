@@ -96,7 +96,6 @@ List of external dependencies used and exposed by spur-common. They can be found
 | Name              | Original Module Name                                             |
 | :----             | :----                                                            |
 | **Promise**       | [bluebird](https://www.npmjs.org/package/bluebird)               |
-| **moment**        | [moment-timezone](https://www.npmjs.org/package/moment-timezone) |
 | **superagent**    | [superagent](https://www.npmjs.org/package/superagent)           |
 | **FormData**      | [form-data](https://www.npmjs.org/package/form-data)             |
 | **consoleColors** | [colors](https://www.npmjs.org/package/colors)                   |
@@ -114,7 +113,6 @@ All of the files under the `src/` directory are made available when this module 
 | **HTTPService**     | [code](src/http/HTTPService.js)     | An extension of the superagent module to support promises and other nice enhancements to make HTTP requests simpler to process.                                                                              |
 | **Logger**          | [code](src/logging/Logger.js)       | An implementation of a logger that extends console.log and makes it so you can add plugins for logging to different sources.                                                                                 |
 | **fsPromise**       | [code](src/promisify/fsPromise.js)  | A wrapper for the Node fs module that adds promises to the module.                                                                                                                                           |
-| **DateTimeUtils**   | [code](src/utils/DateTimeUtils.js)  | Wrapper of moment that allows ease of mocking for testing.                                                                                                                                                   |
 | **Utils**           | [code](src/utils/Utils.js)          | A collection of random utilities.                                                                                                                                                                            |
 
 

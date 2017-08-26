@@ -4,7 +4,6 @@ const Promise = require('bluebird');
 const fs = require('fs');
 const path = require('path');
 const SpurErrors = require('spur-errors');
-const moment = require('moment-timezone');
 const superagent = require('superagent');
 const FormData = require('form-data');
 const consoleColors = require('colors/safe');
@@ -17,7 +16,6 @@ function dependencyRegistration() {
     fs,
     path,
     SpurErrors,
-    moment,
     superagent,
     FormData,
     consoleColors,
