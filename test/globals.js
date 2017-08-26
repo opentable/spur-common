@@ -5,7 +5,6 @@ global.sinon = require('sinon');
 global.chai = require('chai');
 global.expect = global.chai.expect;
 global.nock = require('nock');
-global._ = require('lodash');
 
 global.srcDir = path.resolve(__dirname, '../src');
 global.injector = require(path.join(__dirname, 'fixtures', 'injector.js'));

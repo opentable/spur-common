@@ -1,7 +1,5 @@
 const spur = require('spur-ioc');
 
-// Resolvable dependencies
-const _ = require('lodash');
 const Promise = require('bluebird');
 const fs = require('fs');
 const path = require('path');
@@ -15,7 +13,6 @@ function dependencyRegistration() {
   const ioc = spur.create('spur-common');
 
   ioc.registerDependencies({
-    _,
     Promise,
     fs,
     path,

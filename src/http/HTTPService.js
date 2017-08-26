@@ -1,4 +1,12 @@
-module.exports = function (superagent, Promise, _, FormData, HTTPResponseProcessing) {
+const _forEeach = require('lodash.foreach');
+const _compact = require('lodash.compact');
+const _map = require('lodash.map');
+const _invokeMap = require('lodash.invokemap');
+const _uniq = require('lodash.uniq');
+const _union = require('lodash.union');
+const _some = require('lodash.some');
+
+module.exports = function (superagent, Promise, FormData, HTTPResponseProcessing) {
   const Request = superagent.Request;
 
   superagent.globalPlugins = [];
@@ -34,7 +42,7 @@ module.exports = function (superagent, Promise, _, FormData, HTTPResponseProcess
     if (self.tags == null) { self.tags = {}; }
 
     this._plugins = (this._plugins || []).concat(superagent.globalPlugins);
-    this._pluginInstances = _.compact(_.map(this._plugins, (p) => p.start(self)));
+    this._pluginInstances = _compact(_map(this._plugins, (p) => p.start(self)));
 
     return new Promise((resolve, reject) => {
       Request.prototype.end.call(self, (err, res) => {
@@ -49,7 +57,7 @@ module.exports = function (superagent, Promise, _, FormData, HTTPResponseProcess
           resolve(res);
         }
 
-        return _.invokeMap(self._pluginInstances, 'end');
+        return _invokeMap(self._pluginInstances, 'end');
       });
     });
   };
@@ -96,8 +104,8 @@ module.exports = function (superagent, Promise, _, FormData, HTTPResponseProcess
   };
 
   superagent.setGlobalPlugins = function (plugins) {
-    if (_.isArray(plugins)) {
-      superagent.globalPlugins = _.uniq(_.union(superagent.globalPlugins, plugins));
+    if (Array.isArray(plugins)) {
+      superagent.globalPlugins = _uniq(_union(superagent.globalPlugins, plugins));
       return superagent.globalPlugins;
     }
 
@@ -108,7 +116,7 @@ module.exports = function (superagent, Promise, _, FormData, HTTPResponseProcess
 
   superagent.addGlobalPlugin = function (plugin) {
     const checkPluginExists = (pluginOpt) => pluginOpt === plugin;
-    if (!_.some(superagent.globalPlugins, checkPluginExists)) {
+    if (!_some(superagent.globalPlugins, checkPluginExists)) {
       superagent.globalPlugins.push(plugin);
     }
 
