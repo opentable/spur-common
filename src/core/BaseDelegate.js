@@ -1,5 +1,3 @@
-/* eslint-disable no-underscore-dangle */
-
 module.exports = function (_, console, consoleColors) {
   class BaseDelegate {
 
@@ -13,7 +11,7 @@ module.exports = function (_, console, consoleColors) {
       this._methods = _methods;
       for (let i = 0; i < this._methods.length; i++) {
         const methodName = this._methods[i];
-        (methodNameIn => {
+        ((methodNameIn) => {
           this[methodNameIn] = (...args) => {
             this.callDelegate(methodNameIn, args);
           };

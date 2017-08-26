@@ -1,22 +1,24 @@
 describe('DateTimeUtils', () => {
+  const base = this;
+
   beforeEach(function () {
-    this.clock = sinon.useFakeTimers();
-    injector().inject((DateTimeUtils, moment) => {
-      this.DateTimeUtils = DateTimeUtils;
-      this.moment = moment;
+    base.clock = sinon.useFakeTimers();
+    injector().inject(function (DateTimeUtils, moment) {
+      base.DateTimeUtils = DateTimeUtils;
+      base.moment = moment;
     });
   });
 
   afterEach(function () {
-    this.clock.restore();
+    base.clock.restore();
   });
 
   it('now()', function () {
-    expect(this.DateTimeUtils.now())
-      .to.deep.equal(this.moment());
+    expect(base.DateTimeUtils.now())
+      .to.deep.equal(base.moment());
   });
 
   it('nowMs()', function () {
-    expect(this.DateTimeUtils.nowMs()).to.equal(+new Date());
+    expect(base.DateTimeUtils.nowMs()).to.equal(+new Date());
   });
 });

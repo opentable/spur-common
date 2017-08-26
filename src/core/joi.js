@@ -1,4 +1,4 @@
-import joi from 'joi';
+const joi = require('joi');
 
 module.exports = function (Promise, SpurErrors) {
   const validateFn = Promise.promisify(joi.validate);

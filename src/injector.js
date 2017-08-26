@@ -1,15 +1,15 @@
-import spur from 'spur-ioc';
+const spur = require('spur-ioc');
 
 // Resolvable dependencies
-import _ from 'lodash';
-import Promise from 'bluebird';
-import fs from 'fs';
-import path from 'path';
-import SpurErrors from 'spur-errors';
-import moment from 'moment-timezone';
-import superagent from 'superagent';
-import FormData from 'form-data';
-import consoleColors from 'colors/safe';
+const _ = require('lodash');
+const Promise = require('bluebird');
+const fs = require('fs');
+const path = require('path');
+const SpurErrors = require('spur-errors');
+const moment = require('moment-timezone');
+const superagent = require('superagent');
+const FormData = require('form-data');
+const consoleColors = require('colors/safe');
 
 function dependencyRegistration() {
   const ioc = spur.create('spur-common');
@@ -41,4 +41,4 @@ function dependencyRegistration() {
   return ioc;
 }
 
-export default dependencyRegistration;
+module.exports = dependencyRegistration;

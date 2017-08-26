@@ -1,54 +1,56 @@
 describe('Logger', () => {
+  const base = this;
+
   beforeEach(function () {
-    this.MockLogger = {
+    base.MockLogger = {
       log: sinon.stub()
     };
 
     injector()
-      .addDependency('console', this.MockLogger, true)
-      .inject((Logger, console, _) => {
-        this.Logger = Logger;
-        this.console = console;
-        this._ = _;
+      .addDependency('console', base.MockLogger, true)
+      .inject(function (Logger, console, _) {
+        base.Logger = Logger;
+        base.console = console;
+        base._ = _;
 
-        this.getResult = () => {
-          return this._.last(this.console.log.getCalls()).args;
+        base.getResult = () => {
+          return base._.last(base.console.log.getCalls()).args;
         };
       });
   });
 
   it('should fatal()', function () {
-    this.Logger.fatal('testing fatal');
-    expect(this.getResult()).to.deep.equal(['\u001b[31mLogger#fatal: \u001b[39m', 'testing fatal']);
+    base.Logger.fatal('testing fatal');
+    expect(base.getResult()).to.deep.equal(['\u001b[31mLogger#fatal: \u001b[39m', 'testing fatal']);
   });
 
   it('should error()', function () {
-    this.Logger.error('testing error');
-    expect(this.getResult()).to.deep.equal(['\u001b[31mLogger#error: \u001b[39m', 'testing error']);
+    base.Logger.error('testing error');
+    expect(base.getResult()).to.deep.equal(['\u001b[31mLogger#error: \u001b[39m', 'testing error']);
   });
 
   it('should warn()', function () {
-    this.Logger.warn('testing warn');
-    expect(this.getResult()).to.deep.equal(['\u001b[33mLogger#warn: \u001b[39m', 'testing warn']);
+    base.Logger.warn('testing warn');
+    expect(base.getResult()).to.deep.equal(['\u001b[33mLogger#warn: \u001b[39m', 'testing warn']);
   });
 
   it('should info()', function () {
-    this.Logger.info('testing info');
-    expect(this.getResult()).to.deep.equal(['\u001b[36mLogger#info: \u001b[39m', 'testing info']);
+    base.Logger.info('testing info');
+    expect(base.getResult()).to.deep.equal(['\u001b[36mLogger#info: \u001b[39m', 'testing info']);
   });
 
   it('should log()', function () {
-    this.Logger.log('testing log');
-    expect(this.getResult()).to.deep.equal(['\u001b[36mLogger#log: \u001b[39m', 'testing log']);
+    base.Logger.log('testing log');
+    expect(base.getResult()).to.deep.equal(['\u001b[36mLogger#log: \u001b[39m', 'testing log']);
   });
 
   it('should debug()', function () {
-    this.Logger.debug('testing debug');
-    expect(this.getResult()).to.deep.equal(['\u001b[36mLogger#debug: \u001b[39m', 'testing debug']);
+    base.Logger.debug('testing debug');
+    expect(base.getResult()).to.deep.equal(['\u001b[36mLogger#debug: \u001b[39m', 'testing debug']);
   });
 
   it('should verbose()', function () {
-    this.Logger.verbose('testing verbose');
-    expect(this.getResult()).to.deep.equal(['\u001b[36mLogger#verbose: \u001b[39m', 'testing verbose']);
+    base.Logger.verbose('testing verbose');
+    expect(base.getResult()).to.deep.equal(['\u001b[36mLogger#verbose: \u001b[39m', 'testing verbose']);
   });
 });

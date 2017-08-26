@@ -1,17 +1,20 @@
 describe('BaseDelegate', () => {
+
+  const base = this;
+
   beforeEach(function () {
-    this.logs = [];
+    base.logs = [];
 
     const mockConsole = {
-      log: (...args) => this.logs.push(args)
+      log: (...args) => base.logs.push(args)
     };
 
     injector()
     .addDependency('console', mockConsole, true)
-    .inject((BaseDelegate) => {
-      this.BaseDelegate = BaseDelegate;
+    .inject(function (BaseDelegate) {
+      base.BaseDelegate = BaseDelegate;
 
-      class SomeDelegate extends this.BaseDelegate {
+      class SomeDelegate extends base.BaseDelegate {
 
         constructor() {
           super();
@@ -21,16 +24,16 @@ describe('BaseDelegate', () => {
         }
       }
 
-      this.SomeDelegate = SomeDelegate;
+      base.SomeDelegate = SomeDelegate;
     });
   });
 
-  it('base delegate test', function () {
-    const delegate = new this.SomeDelegate();
+  it('base delegate test', () => {
+    const delegate = new base.SomeDelegate();
     delegate.log('hi');
     delegate.debug('hello');
 
-    expect(this.logs).to.deep.equal([
+    expect(base.logs).to.deep.equal([
       ['\u001b[36mSomeDelegate#log: \u001b[39m', 'hi'],
       ['\u001b[36mSomeDelegate#debug: \u001b[39m', 'hello']
     ]);
@@ -54,7 +57,7 @@ describe('BaseDelegate', () => {
   });
 
   it('multiple delegates', function () {
-    const delegate = new this.SomeDelegate();
+    const delegate = new base.SomeDelegate();
     delegate.delegates = [
       delegate.consoleDelegate,
       delegate.consoleDelegate,
@@ -63,7 +66,7 @@ describe('BaseDelegate', () => {
 
     delegate.log('foo');
 
-    expect(this.logs).to.deep.equal([
+    expect(base.logs).to.deep.equal([
       ['\u001b[36mSomeDelegate#log: \u001b[39m', 'foo'],
       ['\u001b[36mSomeDelegate#log: \u001b[39m', 'foo'],
       ['\u001b[36mSomeDelegate#log: \u001b[39m', 'foo']

@@ -1,5 +1,3 @@
-/* eslint-disable no-param-reassign, no-underscore-dangle */
-
 module.exports = function (superagent, Promise, _, FormData, HTTPResponseProcessing) {
   const Request = superagent.Request;
 

@@ -1,5 +1,4 @@
-import spur from 'spur-ioc';
-// NEED to use require vs import to test module export for backward compatability
+const spur = require('spur-ioc');
 const mainModule = require('../../');
 
 describe('Integration', () => {
@@ -14,7 +13,7 @@ describe('Integration', () => {
 
     describe('base dependencies', () => {
       it('base module dependencies are injectable', function () {
-        this.ioc.inject((_, Promise, fs, path, SpurErrors, moment, superagent, FormData, consoleColors) => {
+        this.ioc.inject(function (_, Promise, fs, path, SpurErrors, moment, superagent, FormData, consoleColors) {
           expect(_).to.exist;
           expect(Promise).to.exist;
           expect(fs).to.exist;
@@ -28,19 +27,19 @@ describe('Integration', () => {
       });
 
       it('should inject `console` and match type', function () {
-        this.ioc.inject((console) => {
+        this.ioc.inject(function (console) {
           expect(console).to.equal(this.console);
         });
       });
 
       it('should inject `JSON` and match type', function () {
-        this.ioc.inject((JSON) => {
+        this.ioc.inject(function (JSON) {
           expect(JSON).to.equal(this.JSON);
         });
       });
 
       it('should inject `nodeProcess` and match type', function () {
-        this.ioc.inject((nodeProcess) => {
+        this.ioc.inject(function (nodeProcess) {
           expect(nodeProcess).to.equal(process);
         });
       });
@@ -48,14 +47,14 @@ describe('Integration', () => {
 
     describe('versions', () => {
       it('should be using lodash 4.x', function () {
-        this.ioc.inject((_) => {
+        this.ioc.inject(function (_) {
           const result = Number(_.VERSION.split('.')[0]);
           expect(result).to.equal(4);
         });
       });
 
       it('should be using moment 2.x', function () {
-        this.ioc.inject((moment) => {
+        this.ioc.inject(function (moment) {
           const result = Number(moment.version.split('.')[0]);
           expect(result).to.equal(2);
         });

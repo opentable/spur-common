@@ -1,7 +1,4 @@
-/* eslint-disable no-console */
-
-import path from 'path';
-// NEED to use require vs import to test module export for backward compatability
+const path = require('path');
 const registerConfig = require('../../registerConfig');
 
 describe('Integration', () => {
@@ -12,7 +9,7 @@ describe('Integration', () => {
 
       registerConfig(ioc, configPath);
 
-      ioc.inject((config, configLoader) => {
+      ioc.inject(function (config, configLoader) {
         expect(config).to.deep.equal({ a: 'a', c: 'c' });
         expect(configLoader.configName).to.equal('test');
       });
@@ -24,7 +21,7 @@ describe('Integration', () => {
 
       registerConfig(ioc, configPath, 'alphaConfig');
 
-      ioc.inject((alphaConfig, alphaConfigLoader) => {
+      ioc.inject(function (alphaConfig, alphaConfigLoader) {
         expect(alphaConfig).to.deep.equal({ a: 'a', c: 'c' });
         expect(alphaConfigLoader.configName).to.equal('test');
       });
