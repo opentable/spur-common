@@ -24,15 +24,16 @@ describe('FixtureUtil', () => {
   it('should reject when fixtures path is not set', function () {
     expect(base.FixtureUtil.fixturesPath).to.equal(undefined);
 
-    base.FixtureUtil.startFileRead('readFileTest')
-    .error((reason) => {
+    return base.FixtureUtil.startFileRead('readFileTest')
+    .catch((reason) => {
       expect(reason.message).to.equal('fixtures path is not defined');
     });
   });
 
   it('should be able to read content from a data fixture file', function () {
     base.FixtureUtil.setFixturesPath(base.expectedFixturesPath);
-    base.FixtureUtil.readAndProcessFile('readFileTest')
+
+    return base.FixtureUtil.readAndProcessFile('readFileTest')
     .then((result) => {
       expect(result).to.deep.equal({
         what: 'test',
@@ -43,7 +44,7 @@ describe('FixtureUtil', () => {
 
   it('should be able to read content from a data fixture file and cache', function () {
     base.FixtureUtil.setFixturesPath(base.expectedFixturesPath);
-    base.FixtureUtil.get('readFileTest')
+    return base.FixtureUtil.get('readFileTest')
     .then((result) => {
       expect(result).to.deep.equal({
         what: 'test',
@@ -52,13 +53,12 @@ describe('FixtureUtil', () => {
     });
   });
 
-  it('should reject getting of the fixture file when file does not exist', function (done) {
+  it('should reject getting of the fixture file when file does not exist', function () {
     base.FixtureUtil.setFixturesPath(base.expectedFixturesPath);
     const missingPath = base.path.join(base.expectedFixturesPath, 'missingFileName.json');
-    base.FixtureUtil.readAndProcessFile('missingFileName')
+    return base.FixtureUtil.readAndProcessFile('missingFileName')
     .catch((reason) => {
       expect(reason.message).to.equal(`${missingPath} not found`);
-      done();
     });
   });
 
