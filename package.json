@@ -54,9 +54,9 @@
     "lodash.some": "^4.6.0",
     "lodash.union": "^4.6.0",
     "lodash.uniq": "^4.5.0",
-    "spur-config": ">=2.0.0-rc.1",
-    "spur-errors": ">=1.0.0-rc.1",
-    "spur-ioc": ">=1.0.0-rc.1",
+    "spur-config": "^2.0.0",
+    "spur-errors": "^1.0.0",
+    "spur-ioc": "^1.0.0",
     "superagent": "^3.3.1"
   },
   "devDependencies": {
