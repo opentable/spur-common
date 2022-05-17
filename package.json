@@ -24,7 +24,7 @@
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",
-    "test": "mocha ./test/unit/ ./test/integration/"
+    "test": "mocha ./test/unit/ ./test/integration/ --color"
   },
   "bugs": {
     "url": "https://github.com/opentable/spur-common/issues"
@@ -33,9 +33,6 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/opentable/spur-common.git"
-  },
-  "engines": {
-    "node": ">=6.0.0"
   },
   "dependencies": {
     "bluebird": "^3.5.1",
