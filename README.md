@@ -2,8 +2,9 @@
 
 A [Node.js](http://nodejs.org/) library of common modules used to create common applications.
 
-[![NPM version](https://badge.fury.io/js/spur-common.png)](http://badge.fury.io/js/spur-common)
-[![Build Status](https://travis-ci.org/opentable/spur-common.png?branch=master)](https://travis-ci.org/opentable/spur-common) [![Dependencies](https://david-dm.org/opentable/spur-common.svg)](https://david-dm.org/opentable/spur-common)
+  [![NPM Version][npm-version-image]][npm-url]
+  [![NPM Install Size][npm-install-size-image]][npm-install-size-url]
+  [![NPM Downloads][npm-downloads-image]][npm-downloads-url]
 
 # About the Spur Framework
 
@@ -143,3 +144,10 @@ $ npm test
 # License
 
 [MIT](LICENSE)
+
+[npm-downloads-image]: https://badgen.net/npm/dm/spur-common
+[npm-downloads-url]: https://npmcharts.com/compare/spur-common?minimal=true
+[npm-install-size-image]: https://badgen.net/packagephobia/install/spur-common
+[npm-install-size-url]: https://packagephobia.com/result?p=spur-common
+[npm-url]: https://npmjs.org/package/spur-common
+[npm-version-image]: https://badgen.net/npm/v/spur-common
