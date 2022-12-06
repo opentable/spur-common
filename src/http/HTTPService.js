@@ -90,7 +90,7 @@ module.exports = function (superagent, Promise, FormData, HTTPResponseProcessing
       });
 
       res.on('end', () => {
-        fn(null, new Buffer(res.data, 'binary'));
+        fn(null, Buffer.from(res.data, 'binary'));
       });
     }).buffer(true);
   };
