@@ -134,7 +134,7 @@ describe('HTTPService', () => {
     .reply(200);
 
     base.HTTPService.post('http://someurl/')
-    .appendFile('file', new Buffer('hello world'), {
+    .appendFile('file', Buffer.from('hello world'), {
       filename: 'hello.json',
       contentType: 'application/json'
     })
