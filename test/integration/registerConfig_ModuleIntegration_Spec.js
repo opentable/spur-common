@@ -1,8 +1,10 @@
 const path = require('path');
 const registerConfig = require('../../registerConfig');
 
-describe('Integration', () => {
+describe('Integration', function () {
+
   describe('registerConfig Module Integration Tests', () => {
+
     it('default configName', () => {
       const ioc = injector();
       const configPath = path.join(__dirname, '../fixtures/config');
@@ -37,5 +39,7 @@ describe('Integration', () => {
       })
       .to.throw();
     });
+
   });
+
 });

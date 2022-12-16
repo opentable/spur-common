@@ -1,19 +1,18 @@
-describe('HTTPLogging', () => {
-  const base = this;
+describe('HTTPLogging', function () {
 
-  beforeEach(function () {
+  beforeEach(() => {
     nock.disableNetConnect();
 
-    injector().inject(function (HTTPService, Timer, HTTPPlugin, HTTPLogging, Logger) {
-      base.HTTPService = HTTPService;
-      base.Timer = Timer;
-      base.HTTPPlugin = HTTPPlugin;
-      base.HTTPLogging = HTTPLogging;
-      base.Logger = Logger;
+    injector().inject((HTTPService, Timer, HTTPPlugin, HTTPLogging, Logger) => {
+      this.HTTPService = HTTPService;
+      this.Timer = Timer;
+      this.HTTPPlugin = HTTPPlugin;
+      this.HTTPLogging = HTTPLogging;
+      this.Logger = Logger;
 
-      base.Timer.mockDuration(33);
-      base.HTTPService.setGlobalPlugins([base.HTTPLogging]);
-      base.Logger.useRecorder();
+      this.Timer.mockDuration(33);
+      this.HTTPService.setGlobalPlugins([this.HTTPLogging]);
+      this.Logger.useRecorder();
     });
   });
 
@@ -22,19 +21,16 @@ describe('HTTPLogging', () => {
     nock.enableNetConnect();
   });
 
-  it('should exist', function () {
-    expect(base.HTTPService).to.exist;
-  });
-
-  it('http success', function (done) {
+  it('http success', (done) => {
     nock('http://someurl')
       .get('/')
       .reply(200, { message: 'response' });
 
-    base.HTTPService
+    this.HTTPService
       .get('http://someurl')
-      .promise().then(() => {
-        expect(base.Logger.recorded.log).to.deep.equal([
+      .promise()
+      .then(() => {
+        expect(this.Logger.recorded.log).to.deep.equal([
           ['HTTPService attempting: GET http://someurl'],
           ['HTTPService success: GET http://someurl, timing:33ms, status:200']
         ]);
@@ -43,21 +39,20 @@ describe('HTTPLogging', () => {
       });
   });
 
-  it('http error', function (done) {
+  it('http error', (done) => {
     nock('http://someurl')
       .get('/')
       .reply(400, { message: 'response' });
 
-    base.HTTPService
-    .get('http://someurl')
-    .promise()
-    .catch(() => {
-      expect(base.Logger.recorded).to.deep.equal({
-        log: [['HTTPService attempting: GET http://someurl']],
-        error: [['HTTPService error: GET http://someurl, timing:33ms, status:400', 'Validation Error']]
-      });
+    this.HTTPService.get('http://someurl')
+      .promise()
+      .catch(() => {
+        expect(this.Logger.recorded).to.deep.equal({
+          log: [['HTTPService attempting: GET http://someurl']],
+          error: [['HTTPService error: GET http://someurl, timing:33ms, status:400', 'Validation Error']]
+        });
 
-      done();
-    });
+        done();
+      });
   });
 });

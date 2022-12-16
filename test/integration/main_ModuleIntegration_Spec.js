@@ -1,9 +1,11 @@
 const spur = require('spur-ioc');
 const mainModule = require('../../');
 
-describe('Integration', () => {
+describe('Integration', function () {
+
   describe('Main Module Integration Tests', () => {
-    beforeEach(function () {
+
+    beforeEach(() =>{
       this.console = console;
       this.JSON = JSON;
 
@@ -12,7 +14,8 @@ describe('Integration', () => {
     });
 
     describe('base dependencies', () => {
-      it('base module dependencies are injectable', function () {
+
+      it('base module dependencies are injectable', () => {
         this.ioc.inject(function (Promise, fs, path, SpurErrors, superagent, FormData, consoleColors) {
           expect(Promise).to.exist;
           expect(fs).to.exist;
@@ -24,19 +27,19 @@ describe('Integration', () => {
         });
       });
 
-      it('should inject `console` and match type', function () {
+      it('should inject `console` and match type', () => {
         this.ioc.inject(function (console) {
           expect(console).to.equal(this.console);
         });
       });
 
-      it('should inject `JSON` and match type', function () {
+      it('should inject `JSON` and match type', () => {
         this.ioc.inject(function (JSON) {
           expect(JSON).to.equal(this.JSON);
         });
       });
 
-      it('should inject `nodeProcess` and match type', function () {
+      it('should inject `nodeProcess` and match type', () => {
         this.ioc.inject(function (nodeProcess) {
           expect(nodeProcess).to.equal(process);
         });
