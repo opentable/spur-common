@@ -57,13 +57,13 @@
     "superagent": "^3.8.3"
   },
   "devDependencies": {
-    "chai": "^4.3.6",
-    "eslint": "^8.15.0",
+    "chai": "^4.3.7",
+    "eslint": "^8.29.0",
     "eslint-plugin-node": "^11.1.0",
     "lodash.every": "^4.6.0",
     "lodash.last": "^3.0.0",
-    "mocha": "^10.0.0",
+    "mocha": "^10.2.0",
     "nock": "^13.2.9",
-    "sinon": "^14.0.0"
+    "sinon": "^15.0.1"
   }
 }
