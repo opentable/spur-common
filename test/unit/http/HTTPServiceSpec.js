@@ -1,5 +1,3 @@
-const _every = require('lodash.every');
-
 describe('HTTPService', function () {
 
   beforeEach(() => {
@@ -13,12 +11,6 @@ describe('HTTPService', function () {
 
       this.mockDuration = 33;
       this.Timer.mockDuration(this.mockDuration);
-
-      this.containsText = (text, arr) => {
-        return _every(arr, (expectedText) => {
-          return text.indexOf(expectedText) > -1;
-        });
-      };
     });
   });
 
@@ -126,27 +118,33 @@ describe('HTTPService', function () {
       });
   });
 
-  it('http append file', (done) => {
-    nock('http://someurl')
-      .filteringRequestBody((requestBody) => { this.requestBody = requestBody; })
-      .post('/')
-      .reply(200);
+  it('http append file', () => {
+    let submittedRequestBody = null;
 
-    this.HTTPService
-      .post('http://someurl/')
+    nock('http://someurl')
+      .post('/fake-upload', (requestBody) => {
+        submittedRequestBody = requestBody;
+        return requestBody;
+      })
+      .reply(200, 'OK');
+
+    return this.HTTPService
+      .post('http://someurl/fake-upload')
       .appendFile('file', Buffer.from('hello world'), {
         filename: 'hello.json',
         contentType: 'application/json'
       })
       .promise()
       .then(() => {
-        const valid = this.containsText(this.requestBody, [
+        const expectedLinesInPost = [
           'Content-Disposition: form-data; name="file"; filename="hello.json"',
           'Content-Type: application/json',
-          'hello world'
-        ]);
-        expect(valid).to.equal(true);
-        done();
+          'hello world',
+        ];
+
+        expectedLinesInPost.forEach((expectedLine) => {
+          expect(submittedRequestBody).to.contain(expectedLine);
+        });
       });
   });
 
