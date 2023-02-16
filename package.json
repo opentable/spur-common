@@ -1,7 +1,7 @@
 {
   "name": "spur-common",
   "description": "A Node.JS library of common modules used as a base to most Node.JS applications.",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "main": "./src/injector",
   "author": {
     "name": "Agustin Colchado",
