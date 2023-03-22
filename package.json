@@ -1,7 +1,7 @@
 {
   "name": "spur-common",
   "description": "A Node.JS library of common modules used as a base to most Node.JS applications.",
-  "version": "2.1.3",
+  "version": "3.0.0-rc.1",
   "main": "./src/injector",
   "author": {
     "name": "Agustin Colchado",
@@ -54,7 +54,7 @@
     "spur-config": "^2.0.3",
     "spur-errors": "^1.0.4",
     "spur-ioc": "^1.2.1",
-    "superagent": "^3.8.3"
+    "superagent": "^8.0.9"
   },
   "devDependencies": {
     "chai": "^4.3.7",
