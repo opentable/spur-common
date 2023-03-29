@@ -1,4 +1,8 @@
+const pkg = require('../../../package.json');
+
 describe('HTTPService', function () {
+
+  const userAgent = `node-spur-common/${pkg.version}`;
 
   beforeEach(() => {
     nock.disableNetConnect();
@@ -47,12 +51,17 @@ describe('HTTPService', function () {
 
     this.HTTPService
       .get('http://someurl')
+      .set('My-Custom-Header','My Custom Header Value')
       .named('LoginService')
       .tagged({ endpoint: 'EndpointName', tag2: 'Some tag value' })
       .plugin(HTTPLogging)
       .promise()
       .then((res) => {
         expect(res.request.name).to.equal('LoginService');
+        expect(res.request.header).to.deep.equal({
+          'User-Agent': userAgent,
+          'My-Custom-Header': 'My Custom Header Value'
+        });
         expect(res.request.tags).to.deep.equal({ endpoint: 'EndpointName', tag2: 'Some tag value' });
         expect(res.request.duration).to.equal(this.mockDuration);
         expect(logs).to.deep.equal(['LoginService', 'http://someurl']);

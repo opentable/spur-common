@@ -6,8 +6,36 @@ const _uniq = require('lodash.uniq');
 const _union = require('lodash.union');
 const _some = require('lodash.some');
 
+const pkg = require('../../package.json');
+
+const overrideActions = [
+  'get',
+  'post',
+  'del',
+  'delete',
+  'put',
+  'patch'
+];
+
+function overrideDefaultMethods(superagent) {
+  const backUpMethods = {};
+  const userAgent = `node-spur-common/${pkg.version}`;
+
+  overrideActions.forEach((actionName) => {
+    // Caching original functions 
+    backUpMethods[actionName] = superagent[actionName];
+
+    // Overriding the actions with custom actions, which will add default headers
+    superagent[actionName] = (url, data, fn) => {
+      return backUpMethods[actionName](url, data, fn).set('User-Agent', userAgent);
+    };
+  });
+}
+
 module.exports = function (superagent, Promise, FormData, HTTPResponseProcessing) {
   const Request = superagent.Request;
+
+  overrideDefaultMethods(superagent);
 
   superagent.globalPlugins = [];
 
