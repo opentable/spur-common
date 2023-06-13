@@ -53,7 +53,7 @@
     "lodash.uniq": "^4.5.0",
     "spur-config": "^2.0.3",
     "spur-errors": "^1.0.4",
-    "spur-ioc": "^1.2.1",
+    "spur-ioc": "^2.0.0",
     "superagent": "^8.0.9"
   },
   "devDependencies": {
