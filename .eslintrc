@@ -1,15 +1,15 @@
 {
   "env": {
-    "es2022": true,
+    "es6": true,
     "node": true
   },
   "plugins": ["node"],
   "parserOptions": {
-    "ecmaVersion": 13
+    "ecmaVersion": 6
   },
   "rules": {
     "node/no-unsupported-features": [2, {
-        "version": 9
+        "version": 6
       }
     ],
     "arrow-parens": ["error", "always"],

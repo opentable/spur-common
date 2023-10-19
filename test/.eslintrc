@@ -1,7 +1,7 @@
 {
   "extends": "../.eslintrc",
   "env": {
-    "es2022": true,
+    "es6": true,
     "mocha": true,
     "node": true,
     "jasmine": true

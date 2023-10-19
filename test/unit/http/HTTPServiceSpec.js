@@ -90,37 +90,6 @@ describe('HTTPService', function () {
       });
   });
 
-  it('timeout error', (done) => {
-    const httpServiceConnectionTimeout = 1;
-    nock('http://someurl')
-      .get('/')
-      .delay(httpServiceConnectionTimeout + 1)
-      .reply(200, 'FOUND');
-
-    const logs = [];
-
-    class HTTPLogging extends this.HTTPPlugin {
-      start() {}
-      end() {
-        const { response, ...rest } = this.request.error.internalError;
-        logs.push(this.request.name, this.request.url, { ...rest });
-      }
-    }
-
-    this.HTTPService
-      .get('http://someurl')
-      .timeout(httpServiceConnectionTimeout)
-      .named('LoginService')
-      .plugin(HTTPLogging)
-      .promise()
-      .catch((e) => {
-        expect(e.statusCode).to.equal(504);
-        expect(e.message).to.equal(`HTTP Error: GET http://someurl Timeout of ${httpServiceConnectionTimeout}ms exceeded: {code: 'ECONNABORTED', errno: 'ETIME'}`);
-        expect(logs).to.deep.equal(['LoginService', 'http://someurl', { timeout: httpServiceConnectionTimeout, code: 'ECONNABORTED', errno: 'ETIME' }]);
-        done();
-      });
-  });
-
   it('unknown http error', (done) => {
     nock('http://someurl')
       .get('/')
