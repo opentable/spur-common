@@ -26,13 +26,24 @@ module.exports = function (SpurErrors) {
     }
 
     _processError() {
-      const err = this.input.error;
+      const { error, method, url } = this.input;
+      const { code, errno, message, status } = error;
 
-      if (!err.status) {
-        const errorMessage = `HTTP Error: ${this.input.method} ${this.input.url} ${err.message}`;
-        this.error = SpurErrors.InternalServerError.create(errorMessage, err);
+      if (!status) {
+        const errorMessage = `HTTP Error: ${method} ${url} ${message}: {code: '${code}', errno: '${errno}'}`;
+
+        switch (errno) {
+          case 'ETIMEDOUT':
+          case 'ETIME':
+            this.error = SpurErrors.GatewayTimeoutError.create(errorMessage, error);
+            break;
+
+          default:
+            this.error = SpurErrors.InternalServerError.create(errorMessage, error);
+            break;
+        }
       } else {
-        this._setErrorByStatusCode(err.status);
+        this._setErrorByStatusCode(status);
       }
     }
 
