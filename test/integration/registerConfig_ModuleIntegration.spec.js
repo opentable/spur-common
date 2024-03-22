@@ -3,6 +3,10 @@ const registerConfig = require('../../registerConfig');
 
 describe('Integration', function () {
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   describe('registerConfig Module Integration Tests', () => {
 
     it('default configName', () => {
@@ -33,8 +37,9 @@ describe('Integration', function () {
       const ioc = injector();
       const configPath = path.join(__dirname, '../fixtures/config2');
 
+      jest.spyOn(console, 'error').mockReturnThis();
+
       expect(() => {
-        console.log('===== EXPECTED ERROR BELOW =====');
         registerConfig(ioc, configPath, 'alphaConfig');
       })
       .toThrow();
