@@ -16,32 +16,32 @@ describe('Integration', function () {
     describe('base dependencies', () => {
 
       it('base module dependencies are injectable', () => {
-        this.ioc.inject(function (Promise, fs, path, SpurErrors, superagent, FormData, consoleColors) {
-          expect(Promise).to.exist;
-          expect(fs).to.exist;
-          expect(path).to.exist;
-          expect(SpurErrors).to.exist;
-          expect(superagent).to.exist;
-          expect(FormData).to.exist;
-          expect(consoleColors).to.exist;
+        this.ioc.inject((Promise, fs, path, SpurErrors, superagent, FormData, consoleColors) => {
+          expect(Promise).toBeDefined();
+          expect(fs).toBeDefined();
+          expect(path).toBeDefined();
+          expect(SpurErrors).toBeDefined();
+          expect(superagent).toBeDefined();
+          expect(FormData).toBeDefined();
+          expect(consoleColors).toBeDefined();
         });
       });
 
       it('should inject `console` and match type', () => {
         this.ioc.inject(function (console) {
-          expect(console).to.equal(this.console);
+          expect(console).toEqual(this.console);
         });
       });
 
       it('should inject `JSON` and match type', () => {
         this.ioc.inject(function (JSON) {
-          expect(JSON).to.equal(this.JSON);
+          expect(JSON).toEqual(this.JSON);
         });
       });
 
       it('should inject `nodeProcess` and match type', () => {
         this.ioc.inject(function (nodeProcess) {
-          expect(nodeProcess).to.equal(process);
+          expect(nodeProcess).toEqual(process);
         });
       });
     });

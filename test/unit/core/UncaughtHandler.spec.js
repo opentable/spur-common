@@ -20,10 +20,10 @@ describe('UncaughtHandler', function () {
 
   it('should listen and process uncaughtException', () => {
     this.UncaughtHandler.listen();
-    expect(this.event).to.equal('uncaughtException');
+    expect(this.event).toBe('uncaughtException');
 
     this.errorFn(new Error('Oops!'));
-    expect(this.Logger.recorded.error[0][0].message).to.equal('Oops!');
-    expect(this.exitCode).to.equal(0);
+    expect(this.Logger.recorded.error[0][0].message).toBe('Oops!');
+    expect(this.exitCode).toBe(0);
   });
 });

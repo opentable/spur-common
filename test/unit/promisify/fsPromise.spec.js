@@ -1,15 +1,14 @@
-describe('fsPromise', () => {
-  const base = this;
+describe('fsPromise', function () {
 
   beforeEach(() => {
-    injector().inject(function (fsPromise) {
-      base.fsPromise = fsPromise;
+    injector().inject((fsPromise) => {
+      this.fsPromise = fsPromise;
     });
   });
 
-  it('should exist', function () {
-    expect(base.fsPromise).to.exist;
-    expect(base.fsPromise.exists).to.exist;
-    expect(base.fsPromise.writeFileAsync).to.exist;
+  it('should exist', () => {
+    expect(this.fsPromise).toBeDefined();
+    expect(this.fsPromise.exists).toBeDefined();
+    expect(this.fsPromise.writeFileAsync).toBeDefined();
   });
 });

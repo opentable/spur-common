@@ -1,3 +1,5 @@
+const nock = require('nock');
+
 describe('HTTPService', function () {
 
   beforeEach(() => {
@@ -52,12 +54,12 @@ describe('HTTPService', function () {
       .plugin(HTTPLogging)
       .promise()
       .then((res) => {
-        expect(res.request.name).to.equal('LoginService');
-        expect(res.request.tags).to.deep.equal({ endpoint: 'EndpointName', tag2: 'Some tag value' });
-        expect(res.request.duration).to.equal(this.mockDuration);
-        expect(logs).to.deep.equal(['LoginService', 'http://someurl']);
-        expect(this.HTTPService.getGlobalPlugins()).to.deep.contain(HTTPFakePlugin);
-        expect(this.HTTPService.getGlobalPlugins().length).to.equal(2);
+        expect(res.request.name).toBe('LoginService');
+        expect(res.request.tags).toEqual({ endpoint: 'EndpointName', tag2: 'Some tag value' });
+        expect(res.request.duration).toBe(this.mockDuration);
+        expect(logs).toEqual(['LoginService', 'http://someurl']);
+        expect(this.HTTPService.getGlobalPlugins()).toContain(HTTPFakePlugin);
+        expect(this.HTTPService.getGlobalPlugins().length).toBe(2);
         done();
       });
   });
@@ -82,9 +84,9 @@ describe('HTTPService', function () {
       .plugin(HTTPLogging)
       .promise()
       .catch((e) => {
-        expect(e.statusCode).to.equal(400);
-        expect(e.data).to.deep.equal({ message: 'response' });
-        expect(logs).to.deep.equal(['LoginService', 'http://someurl', { message: 'response' }]);
+        expect(e.statusCode).toBe(400);
+        expect(e.data).toEqual({ message: 'response' });
+        expect(logs).toEqual(['LoginService', 'http://someurl', { message: 'response' }]);
 
         done();
       });
@@ -114,9 +116,9 @@ describe('HTTPService', function () {
       .plugin(HTTPLogging)
       .promise()
       .catch((e) => {
-        expect(e.statusCode).to.equal(504);
-        expect(e.message).to.equal(`HTTP Error: GET http://someurl Timeout of ${httpServiceConnectionTimeout}ms exceeded: {code: 'ECONNABORTED', errno: 'ETIME'}`);
-        expect(logs).to.deep.equal(['LoginService', 'http://someurl', { timeout: httpServiceConnectionTimeout, code: 'ECONNABORTED', errno: 'ETIME' }]);
+        expect(e.statusCode).toBe(504);
+        expect(e.message).toBe(`HTTP Error: GET http://someurl Timeout of ${httpServiceConnectionTimeout}ms exceeded: {code: 'ECONNABORTED', errno: 'ETIME'}`);
+        expect(logs).toEqual(['LoginService', 'http://someurl', { timeout: httpServiceConnectionTimeout, code: 'ECONNABORTED', errno: 'ETIME' }]);
         done();
       });
   });
@@ -141,10 +143,10 @@ describe('HTTPService', function () {
       .plugin(HTTPLogging)
       .promise()
       .catch((e) => {
-        expect(e.statusCode).to.equal(423);
-        expect(e.data).to.deep.equal({ message: 'response' });
-        expect(e.message).to.equal('HTTP Error: 423 GET http://someurl');
-        expect(logs).to.deep.equal(['LoginService', 'http://someurl', { message: 'response' }]);
+        expect(e.statusCode).toBe(423);
+        expect(e.data).toEqual({ message: 'response' });
+        expect(e.message).toBe('HTTP Error: 423 GET http://someurl');
+        expect(logs).toEqual(['LoginService', 'http://someurl', { message: 'response' }]);
         done();
       });
   });
@@ -174,7 +176,7 @@ describe('HTTPService', function () {
         ];
 
         expectedLinesInPost.forEach((expectedLine) => {
-          expect(submittedRequestBody).to.contain(expectedLine);
+          expect(submittedRequestBody).toContain(expectedLine);
         });
       });
   });
@@ -193,8 +195,8 @@ describe('HTTPService', function () {
         .promise()
         .then((response) => {
           const headers = JSON.parse(response.text);
-          expect(headers['spur-http-header']).to.equal('spur-http-header-value');
-          expect(response.statusCode).to.equal(200);
+          expect(headers['spur-http-header']).toBe('spur-http-header-value');
+          expect(response.statusCode).toBe(200);
           testServer.close(done);
         });
     });
@@ -208,8 +210,8 @@ describe('HTTPService', function () {
         .promise()
         .then((response) => {
           const headers = JSON.parse(response.text);
-          expect(headers['spur-http-header']).to.equal('spur-http-header-value');
-          expect(response.statusCode).to.equal(200);
+          expect(headers['spur-http-header']).toBe('spur-http-header-value');
+          expect(response.statusCode).toBe(200);
           testServer.close(done);
         });
     });
