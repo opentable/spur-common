@@ -57,7 +57,7 @@
     "superagent": "8.1.2"
   },
   "devDependencies": {
-    "chai": "4.4.1",
+    "chai": "5.1.0",
     "eslint": "8.57.0",
     "eslint-plugin-node": "11.1.0",
     "lodash.every": "4.6.0",
