@@ -6,7 +6,7 @@ describe('ConsoleLogger', function () {
       .inject((ConsoleLogger, console) => {
         this.ConsoleLogger = ConsoleLogger;
 
-        logSpy = jest.spyOn(console, 'log');
+        logSpy = jest.spyOn(console, 'log').mockReturnThis();
       });
   });
 
