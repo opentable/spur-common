@@ -24,8 +24,8 @@
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",
-    "test": "jest test",
-    "test:unit": "jest test/unit",
+    "test": "jest test --colors",
+    "test:unit": "jest test/unit --colors",
     "test:integration": "jest ./test/integration"
   },
   "bugs": {
