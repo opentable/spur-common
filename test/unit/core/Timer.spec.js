@@ -7,10 +7,9 @@ describe('Timer', function () {
 
       this.hrtimeStub =  jest.spyOn(this.nodeProcess, 'hrtime');
 
-      // First call
-      this.hrtimeStub.mockReturnValueOnce([7973, 560332779]);
-      // Second call
-      this.hrtimeStub.mockReturnValueOnce([0, 1065832]);
+      this.hrtimeStub
+        .mockReturnValueOnce([7973, 560332779]) // First call
+        .mockReturnValueOnce([0, 1065832]); // Second call
     });
   });
 

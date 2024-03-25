@@ -1,7 +1,7 @@
 module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
-    './src/**/*.[jt]s?(x)'
+    './src/**/*.js?(x)'
   ],
   coverageDirectory: 'coverage',
   coveragePathIgnorePatterns: [
@@ -14,8 +14,8 @@ module.exports = {
   rootDir: '.',
   testEnvironment: 'node',
   testMatch: [
-    '**/__tests__/**/*.[jt]s?(x)',
-    '**/?(*.)+(spec).[tj]s?(x)'
+    '**/__tests__/**/*.js?(x)',
+    '**/?(*.)+(spec).js?(x)'
   ],
   testPathIgnorePatterns: [
     '/node_modules/'
