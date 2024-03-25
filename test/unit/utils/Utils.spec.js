@@ -12,7 +12,7 @@ describe('Utils', function () {
     const ob = { k: 'v' };
     const fn = this.Utils.prop('k');
 
-    expect(fn(ob)).to.equal('v');
+    expect(fn(ob)).toBe('v');
   });
 
   it('extendWith', () => {
@@ -23,18 +23,18 @@ describe('Utils', function () {
 
     fn(obToExtend);
 
-    expect(obToExtend).to.deep.equal({
+    expect(obToExtend).toEqual({
       a: 'a', b: 'b'
     });
   });
 
   it('capitalize()', () => {
-    expect(this.Utils.capitalize('foo')).to.equal('Foo');
+    expect(this.Utils.capitalize('foo')).toBe('Foo');
   });
 
   it('identity()', () => {
     const fn = this.Utils.identity(2);
-    expect(fn()).to.equal(2);
+    expect(fn()).toBe(2);
   });
 
   it('mapObject', () => {
@@ -45,8 +45,8 @@ describe('Utils', function () {
     const timesTwo = (n) => n + n;
     const newOb = this.Utils.mapObject(ob, timesTwo);
 
-    expect(newOb).not.to.equal(ob);
-    expect(newOb).to.deep.equal({
+    expect(newOb).not.toBe(ob);
+    expect(newOb).toEqual({
       one: 2,
       two: 4
     });
@@ -56,8 +56,8 @@ describe('Utils', function () {
     const ob = { name: 'hi' };
     const ob2 = this.Utils.deepClone(ob);
 
-    expect(ob).not.to.equal(ob2);
-    expect(ob).to.deep.equal(ob2);
+    expect(ob).not.toBe(ob2);
+    expect(ob).toEqual(ob2);
   });
 
   it('promiseQueue()', (done) => {
@@ -80,7 +80,7 @@ describe('Utils', function () {
       delay(1, 5)
     ])
     .done(() => {
-      expect(str).to.equal('12345');
+      expect(str).toBe('12345');
       done();
     });
   });
@@ -90,7 +90,7 @@ describe('Utils', function () {
 
     this.Utils.readFile(filePath)
       .done((data) => {
-        expect(data).to.equal('{\n  "what": "test",\n  "year": 2015\n}\n');
+        expect(data).toBe('{\n  "what": "test",\n  "year": 2015\n}\n');
       });
   });
 
@@ -99,8 +99,8 @@ describe('Utils', function () {
 
     this.Utils.readJsonFile(filePath)
       .done((data) => {
-        expect(data.what).to.equal('test');
-        expect(data.year).to.equal(2015);
+        expect(data.what).toBe('test');
+        expect(data.year).toBe(2015);
       });
   });
 
@@ -109,7 +109,7 @@ describe('Utils', function () {
 
     this.Utils.readJsonFile(filePath)
       .catch((error) => {
-        expect(error.message).to.contain('Error Parsing JSON');
+        expect(error.message).toContain('Error Parsing JSON');
         done();
       });
   });

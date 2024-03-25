@@ -17,15 +17,15 @@ describe('FixtureUtil', function () {
 
   it('fixtures path is set', () => {
     this.FixtureUtil.setFixturesPath(this.expectedFixturesPath);
-    expect(this.FixtureUtil.fixturesPath).to.equal(this.expectedFixturesPath);
+    expect(this.FixtureUtil.fixturesPath).toBe(this.expectedFixturesPath);
   });
 
   it('should reject when fixtures path is not set', () => {
-    expect(this.FixtureUtil.fixturesPath).to.equal(undefined);
+    expect(this.FixtureUtil.fixturesPath).toBeUndefined();
 
     return this.FixtureUtil.startFileRead('readFileTest')
     .catch((reason) => {
-      expect(reason.message).to.equal('fixtures path is not defined');
+      expect(reason.message).toBe('fixtures path is not defined');
     });
   });
 
@@ -34,7 +34,7 @@ describe('FixtureUtil', function () {
 
     return this.FixtureUtil.readAndProcessFile('readFileTest')
     .then((result) => {
-      expect(result).to.deep.equal({
+      expect(result).toEqual({
         what: 'test',
         year: 2015
       });
@@ -45,7 +45,7 @@ describe('FixtureUtil', function () {
     this.FixtureUtil.setFixturesPath(this.expectedFixturesPath);
     return this.FixtureUtil.get('readFileTest')
     .then((result) => {
-      expect(result).to.deep.equal({
+      expect(result).toEqual({
         what: 'test',
         year: 2015
       });
@@ -57,18 +57,18 @@ describe('FixtureUtil', function () {
     const missingPath = this.path.join(this.expectedFixturesPath, 'missingFileName.json');
     return this.FixtureUtil.readAndProcessFile('missingFileName')
     .catch((reason) => {
-      expect(reason.message).to.equal(`${missingPath} not found`);
+      expect(reason.message).toBe(`${missingPath} not found`);
     });
   });
 
   it('should serialize a valid json string', () => {
     let expected = { firstProp: 'firstPropValue', complexProp: { secondProp: 'secondPropValue' } };
     expect(this.FixtureUtil.processText(JSON.stringify(expected, null, 2)))
-      .to.deep.equal(expected);
+      .toEqual(expected);
 
     expected = {};
-    expect(this.FixtureUtil.processText(null)).to.deep.equal(expected);
-    expect(this.FixtureUtil.processText(undefined)).to.deep.equal(expected);
-    expect(this.FixtureUtil.processText('')).to.deep.equal(expected);
+    expect(this.FixtureUtil.processText(null)).toEqual(expected);
+    expect(this.FixtureUtil.processText(undefined)).toEqual(expected);
+    expect(this.FixtureUtil.processText('')).toEqual(expected);
   });
 });

@@ -30,7 +30,7 @@ describe('BaseDelegate', function () {
     delegate.log('hi');
     delegate.debug('hello');
 
-    expect(this.logs).to.deep.equal([
+    expect(this.logs).toEqual([
       ['\u001b[36mSomeDelegate#log: \u001b[39m', 'hi'],
       ['\u001b[36mSomeDelegate#debug: \u001b[39m', 'hello']
     ]);
@@ -38,8 +38,8 @@ describe('BaseDelegate', function () {
     delegate.useRecorder();
     delegate.log('hi2');
     delegate.debug('hello2');
-    expect(delegate.recorded.log).to.deep.equal([['hi2']]);
-    expect(delegate.recorded.debug).to.deep.equal([['hello2']]);
+    expect(delegate.recorded.log).toEqual([['hi2']]);
+    expect(delegate.recorded.debug).toEqual([['hello2']]);
 
     delegate.use({
       log: (delegateLog) => { this.delegateLog = delegateLog; },
@@ -49,8 +49,8 @@ describe('BaseDelegate', function () {
     delegate.log('foo');
     delegate.debug('bar');
 
-    expect(this.delegateLog).to.equal('foo');
-    expect(this.delegateDebug).to.equal('bar');
+    expect(this.delegateLog).toBe('foo');
+    expect(this.delegateDebug).toBe('bar');
   });
 
   it('multiple delegates', () => {
@@ -63,7 +63,7 @@ describe('BaseDelegate', function () {
 
     delegate.log('foo');
 
-    expect(this.logs).to.deep.equal([
+    expect(this.logs).toEqual([
       ['\u001b[36mSomeDelegate#log: \u001b[39m', 'foo'],
       ['\u001b[36mSomeDelegate#log: \u001b[39m', 'foo'],
       ['\u001b[36mSomeDelegate#log: \u001b[39m', 'foo']

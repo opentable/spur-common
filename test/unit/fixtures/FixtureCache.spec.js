@@ -9,14 +9,14 @@ describe('FixtureCache', function () {
   });
 
   it('should initialize with an empty cache', () => {
-    expect(this.FixtureCache.cache).to.deep.equal({});
+    expect(this.FixtureCache.cache).toEqual({});
   });
 
   describe('set', () => {
     beforeEach(() => {
       this.testSet = (name, value) => {
         this.FixtureCache.set(name, value);
-        expect(this.FixtureCache.cache[name]).to.deep.equal(value);
+        expect(this.FixtureCache.cache[name]).toEqual(value);
       };
     });
     it('should set integer', () => {
@@ -55,7 +55,7 @@ describe('FixtureCache', function () {
 
       this.testGet = (name, value) => {
         const result = this.FixtureCache.get(name);
-        expect(result).to.deep.equal(value);
+        expect(result).toEqual(value);
       };
     });
     it('should set integer', () => {
@@ -83,23 +83,23 @@ describe('FixtureCache', function () {
   describe('getOrPromise', () => {
     beforeEach(() => {
       this.fetchCallback = () => { return this.Promise.resolve('non-cached value'); };
-      sinon.spy(this, 'fetchCallback');
+      jest.spyOn(this, 'fetchCallback');
     });
 
     it('should only make a cache hit when cache entry exists', () => {
       this.FixtureCache.cache.existingKeyEntry = 'cached value';
-      this.FixtureCache.getOrPromise('existingKeyEntry', this.fetchCallback)
+      return this.FixtureCache.getOrPromise('existingKeyEntry', this.fetchCallback)
         .then((result) => {
-          expect(result).to.equal('cached value');
-          expect(this.fetchCallback.notCalled).to.equal(true);
+          expect(result).toBe('cached value');
+          expect(this.fetchCallback).not.toHaveBeenCalled();
         });
     });
 
     it('should call fetch callback when entry is not in cache', () => {
-      this.FixtureCache.getOrPromise('existingKeyEntry', this.fetchCallback)
+      return this.FixtureCache.getOrPromise('existingKeyEntry', this.fetchCallback)
         .then((result) => {
-          expect(result).to.equal('non-cached value');
-          expect(this.fetchCallback.called).to.equal(true);
+          expect(result).toBe('non-cached value');
+          expect(this.fetchCallback).toHaveBeenCalled();
         });
     });
   });

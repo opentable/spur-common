@@ -3,6 +3,10 @@ const registerConfig = require('../../registerConfig');
 
 describe('Integration', function () {
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   describe('registerConfig Module Integration Tests', () => {
 
     it('default configName', () => {
@@ -11,9 +15,9 @@ describe('Integration', function () {
 
       registerConfig(ioc, configPath);
 
-      ioc.inject(function (config, configLoader) {
-        expect(config).to.deep.equal({ a: 'a', c: 'c' });
-        expect(configLoader.configName).to.equal('test');
+      ioc.inject((config, configLoader) => {
+        expect(config).toEqual({ a: 'a', c: 'c' });
+        expect(configLoader.configName).toBe('test');
       });
     });
 
@@ -23,9 +27,9 @@ describe('Integration', function () {
 
       registerConfig(ioc, configPath, 'alphaConfig');
 
-      ioc.inject(function (alphaConfig, alphaConfigLoader) {
-        expect(alphaConfig).to.deep.equal({ a: 'a', c: 'c' });
-        expect(alphaConfigLoader.configName).to.equal('test');
+      ioc.inject((alphaConfig, alphaConfigLoader) => {
+        expect(alphaConfig).toEqual({ a: 'a', c: 'c' });
+        expect(alphaConfigLoader.configName).toBe('test');
       });
     });
 
@@ -33,11 +37,12 @@ describe('Integration', function () {
       const ioc = injector();
       const configPath = path.join(__dirname, '../fixtures/config2');
 
+      jest.spyOn(console, 'error').mockReturnThis();
+
       expect(() => {
-        console.log('===== EXPECTED ERROR BELOW =====');
         registerConfig(ioc, configPath, 'alphaConfig');
       })
-      .to.throw();
+      .toThrow();
     });
 
   });

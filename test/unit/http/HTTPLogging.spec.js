@@ -1,3 +1,5 @@
+const nock = require('nock');
+
 describe('HTTPLogging', function () {
 
   beforeEach(() => {
@@ -30,7 +32,7 @@ describe('HTTPLogging', function () {
       .get('http://someurl')
       .promise()
       .then(() => {
-        expect(this.Logger.recorded.log).to.deep.equal([
+        expect(this.Logger.recorded.log).toEqual([
           ['HTTPService attempting: GET http://someurl'],
           ['HTTPService success: GET http://someurl, timing:33ms, status:200']
         ]);
@@ -47,7 +49,7 @@ describe('HTTPLogging', function () {
     this.HTTPService.get('http://someurl')
       .promise()
       .catch(() => {
-        expect(this.Logger.recorded).to.deep.equal({
+        expect(this.Logger.recorded).toEqual({
           log: [['HTTPService attempting: GET http://someurl']],
           error: [['HTTPService error: GET http://someurl, timing:33ms, status:400', 'Validation Error']]
         });
