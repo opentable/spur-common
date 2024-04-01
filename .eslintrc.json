@@ -1,37 +1,10 @@
 {
   "env": {
-    "es2022": true,
+    "commonjs": true,
+    "es2021": true,
     "node": true
   },
-  "plugins": ["node"],
-  "parserOptions": {
-    "ecmaVersion": 13
-  },
+  "extends": "eslint:recommended",
   "rules": {
-    "node/no-unsupported-features": [2, {
-        "version": 9
-      }
-    ],
-    "arrow-parens": ["error", "always"],
-    "no-shadow": 0,
-    "radix": 0,
-    "keyword-spacing": 0,
-    "consistent-return": 0,
-    "arrow-body-style": 0,
-    "no-use-before-define": 0,
-    "quotes": [
-      "error",
-      "single",
-      {
-        "avoidEscape": true
-      }
-    ],
-    "semi": ["error", "always"],
-    "one-var": [
-      "error",
-      {
-        "uninitialized": "always"
-      }
-    ]
   }
 }
