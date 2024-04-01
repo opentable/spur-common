@@ -1,5 +1,5 @@
 {
-  "extends": "../.eslintrc",
+  "extends": "../.eslintrc.json",
   "env": {
     "es2022": true,
     "mocha": true,
