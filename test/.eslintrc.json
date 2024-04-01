@@ -1,0 +1,13 @@
+{
+  "extends": "../.eslintrc.json",
+  "env": {
+    "jest": true
+  },
+  "globals": {
+    "injector": true,
+    "testServer": true
+  },
+  "rules": {
+    "no-unused-vars": 0
+  }
+}
