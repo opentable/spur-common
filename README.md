@@ -99,7 +99,6 @@ List of external dependencies used and exposed by spur-common. They can be found
 | **Promise**       | [bluebird](https://www.npmjs.org/package/bluebird)               |
 | **superagent**    | [superagent](https://www.npmjs.org/package/superagent)           |
 | **FormData**      | [form-data](https://www.npmjs.org/package/form-data)             |
-| **consoleColors** | [colors](https://www.npmjs.org/package/colors)                   |
 | **SpurErrors**    | [spur-errors](https://www.npmjs.org/package/spur-errors)         |
 
 ### Local dependecies

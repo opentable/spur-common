@@ -31,8 +31,8 @@ describe('BaseDelegate', function () {
     delegate.debug('hello');
 
     expect(this.logs).toEqual([
-      ['\u001b[36mSomeDelegate#log: \u001b[39m', 'hi'],
-      ['\u001b[36mSomeDelegate#debug: \u001b[39m', 'hello']
+      ['SomeDelegate#log: ', 'hi'],
+      ['SomeDelegate#debug: ', 'hello']
     ]);
 
     delegate.useRecorder();
@@ -64,9 +64,9 @@ describe('BaseDelegate', function () {
     delegate.log('foo');
 
     expect(this.logs).toEqual([
-      ['\u001b[36mSomeDelegate#log: \u001b[39m', 'foo'],
-      ['\u001b[36mSomeDelegate#log: \u001b[39m', 'foo'],
-      ['\u001b[36mSomeDelegate#log: \u001b[39m', 'foo']
+      ['SomeDelegate#log: ', 'foo'],
+      ['SomeDelegate#log: ', 'foo'],
+      ['SomeDelegate#log: ', 'foo']
     ]);
   });
 });
