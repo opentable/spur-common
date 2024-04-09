@@ -1,7 +1,3 @@
-const _forEach = require('lodash.foreach');
-const _isFunction = require('lodash.isfunction');
-const _some = require('lodash.some');
-
 module.exports = function (console, consoleColors) {
   class BaseDelegate {
 
@@ -26,10 +22,11 @@ module.exports = function (console, consoleColors) {
     }
 
     callDelegate(methodName, args) {
-      _forEach(this.delegates, (delegate) => {
-        if (_isFunction(delegate[methodName])) {
+      const items = this.delegates || [];
+      items.forEach((delegate) => {
+        if (typeof delegate[methodName] === 'function') {
           delegate[methodName].apply(delegate, args);
-        } else if (_isFunction(delegate)) {
+        } else if (typeof delegate  === 'function') {
           delegate.call(this, methodName, args);
         }
       });
@@ -55,9 +52,9 @@ module.exports = function (console, consoleColors) {
       const checkMethodType = (item) => item === methodName;
       let color = 'cyan';
 
-      if (_some(['fatal', 'error'], checkMethodType)) {
+      if (['fatal', 'error'].some(checkMethodType)) {
         color = 'red';
-      } else if (_some(['warn'], checkMethodType)) {
+      } else if (['warn'].some(checkMethodType)) {
         color = 'yellow';
       }
 

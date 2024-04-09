@@ -1,9 +1,7 @@
 const _compact = require('lodash.compact');
-const _map = require('lodash.map');
 const _invokeMap = require('lodash.invokemap');
 const _uniq = require('lodash.uniq');
 const _union = require('lodash.union');
-const _some = require('lodash.some');
 
 module.exports = function (superagent, Promise, FormData, HTTPResponseProcessing) {
   const Request = superagent.Request;
@@ -41,7 +39,7 @@ module.exports = function (superagent, Promise, FormData, HTTPResponseProcessing
     if (self.tags == null) { self.tags = {}; }
 
     this._plugins = (this._plugins || []).concat(superagent.globalPlugins);
-    this._pluginInstances = _compact(_map(this._plugins, (p) => p.start(self)));
+    this._pluginInstances = _compact(this._plugins.map((p) => p.start(self)));
 
     return new Promise((resolve, reject) => {
       Request.prototype.end.call(self, (err, res) => {
@@ -115,7 +113,7 @@ module.exports = function (superagent, Promise, FormData, HTTPResponseProcessing
 
   superagent.addGlobalPlugin = function (plugin) {
     const checkPluginExists = (pluginOpt) => pluginOpt === plugin;
-    if (!_some(superagent.globalPlugins, checkPluginExists)) {
+    if (!superagent.globalPlugins.some(checkPluginExists)) {
       superagent.globalPlugins.push(plugin);
     }
 
