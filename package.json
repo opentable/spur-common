@@ -43,9 +43,9 @@
     "lodash.invokemap": "4.6.0",
     "lodash.union": "4.6.0",
     "lodash.uniq": "4.5.0",
-    "spur-config": "2.0.5",
-    "spur-errors": "1.0.7",
-    "spur-ioc": "2.0.1",
+    "spur-config": "2.0.6",
+    "spur-errors": "1.0.8",
+    "spur-ioc": "2.1.0",
     "superagent": "8.1.2"
   },
   "devDependencies": {
