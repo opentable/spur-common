@@ -6,7 +6,6 @@ const path = require('path');
 const SpurErrors = require('spur-errors');
 const superagent = require('superagent');
 const FormData = require('form-data');
-const consoleColors = require('colors/safe');
 
 function dependencyRegistration() {
   const ioc = spur.create('spur-common');
@@ -18,7 +17,6 @@ function dependencyRegistration() {
     SpurErrors,
     superagent,
     FormData,
-    consoleColors,
     console,
     nodeProcess: process,
     JSON

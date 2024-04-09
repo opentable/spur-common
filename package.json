@@ -38,7 +38,6 @@
   },
   "dependencies": {
     "bluebird": "3.7.2",
-    "colors": "1.4.0",
     "form-data": "4.0.0",
     "lodash.compact": "3.0.1",
     "lodash.invokemap": "4.6.0",

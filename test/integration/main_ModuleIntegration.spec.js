@@ -16,14 +16,13 @@ describe('Integration', function () {
     describe('base dependencies', () => {
 
       it('base module dependencies are injectable', () => {
-        this.ioc.inject((Promise, fs, path, SpurErrors, superagent, FormData, consoleColors) => {
+        this.ioc.inject((Promise, fs, path, SpurErrors, superagent, FormData) => {
           expect(Promise).toBeDefined();
           expect(fs).toBeDefined();
           expect(path).toBeDefined();
           expect(SpurErrors).toBeDefined();
           expect(superagent).toBeDefined();
           expect(FormData).toBeDefined();
-          expect(consoleColors).toBeDefined();
         });
       });
 

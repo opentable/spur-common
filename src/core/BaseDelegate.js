@@ -1,4 +1,4 @@
-module.exports = function (console, consoleColors) {
+module.exports = function (console) {
   class BaseDelegate {
 
     constructor() {
@@ -41,24 +41,14 @@ module.exports = function (console, consoleColors) {
     }
 
     consoleDelegate(methodName, args) {
-      const prefix = this.getColoredLabel(methodName);
+      const prefix = this.getLabel(methodName);
 
       // eslint-disable-next-line no-console
       return console.log.apply(console, [prefix].concat(args));
     }
 
-    getColoredLabel(methodName) {
-      const label = `${this.constructor.name}#${methodName}: `;
-      const checkMethodType = (item) => item === methodName;
-      let color = 'cyan';
-
-      if (['fatal', 'error'].some(checkMethodType)) {
-        color = 'red';
-      } else if (['warn'].some(checkMethodType)) {
-        color = 'yellow';
-      }
-
-      return consoleColors[color](label);
+    getLabel(methodName) {
+      return `${this.constructor.name}#${methodName}: `;
     }
 
     useRecorder() {
