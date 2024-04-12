@@ -4,9 +4,9 @@ module.exports = function (Promise) {
     constructor() {
       this.cache = {};
 
-      this.get.bind(this);
-      this.set.bind(this);
-      this.setAsync.bind(this);
+      // this.get.bind(this);
+      // this.set.bind(this);
+      // this.setAsync.bind(this);
     }
 
     set(key, value) {
@@ -32,6 +32,7 @@ module.exports = function (Promise) {
 
     setAsync(key, value) {
       setTimeout(() => {
+        console.warn("setAsync/setTimeout", this.set);
         this.set(key, value);
       });
     }

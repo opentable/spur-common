@@ -81,25 +81,38 @@ describe('FixtureCache', function () {
   });
 
   describe('getOrPromise', () => {
+    let fixtureCacheSetSpy;
+
     beforeEach(() => {
+      jest.useFakeTimers();
       this.fetchCallback = () => { return this.Promise.resolve('non-cached value'); };
       jest.spyOn(this, 'fetchCallback');
+      fixtureCacheSetSpy = jest.spyOn(this.FixtureCache, 'set');
     });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    })
 
     it('should only make a cache hit when cache entry exists', () => {
       this.FixtureCache.cache.existingKeyEntry = 'cached value';
       return this.FixtureCache.getOrPromise('existingKeyEntry', this.fetchCallback)
         .then((result) => {
+          jest.runOnlyPendingTimers();
           expect(result).toBe('cached value');
           expect(this.fetchCallback).not.toHaveBeenCalled();
+          expect(fixtureCacheSetSpy).not.toHaveBeenCalled();
         });
     });
 
     it('should call fetch callback when entry is not in cache', () => {
       return this.FixtureCache.getOrPromise('existingKeyEntry', this.fetchCallback)
         .then((result) => {
+          jest.runOnlyPendingTimers();
           expect(result).toBe('non-cached value');
           expect(this.fetchCallback).toHaveBeenCalled();
+          expect(fixtureCacheSetSpy).toHaveBeenCalled();
+          expect(fixtureCacheSetSpy).toHaveBeenCalledWith('existingKeyEntry', 'non-cached value');
         });
     });
   });
