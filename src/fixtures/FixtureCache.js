@@ -1,39 +1,47 @@
-module.exports = function (Promise) {
+module.exports = function (P) {
+  const PromiseCtor = P || Promise;
+
   class FixtureCache {
-
     constructor() {
-      this.cache = {};
-
-      this.get.bind(this);
-      this.set.bind(this);
-      this.setAsync.bind(this);
+      this.cache = new Map();
+      this.inflight = new Map();
     }
 
     set(key, value) {
-      this.cache[key] = value;
+      this.cache.set(key, value);
     }
 
     get(key) {
-      return this.cache[key];
+      return this.cache.get(key);
     }
 
     getOrPromise(key, fn) {
-      const cacheHit = this.cache[key];
-
-      if (cacheHit) {
-        return Promise.resolve(cacheHit);
+      if (this.cache.has(key)) {
+        return PromiseCtor.resolve(this.cache.get(key));
       }
 
-      return fn().then((result) => {
-        this.setAsync(key, result);
-        return result;
-      });
+      if (this.inflight.has(key)) {
+        return this.inflight.get(key);
+      }
+
+      const p = PromiseCtor.resolve()
+        .then(fn)
+        .then((result) => {
+          this.setAsync(key, result);
+          this.inflight.delete(key);
+          return result;
+        })
+        .catch((err) => {
+          this.inflight.delete(key);
+          throw err;
+        });
+
+      this.inflight.set(key, p);
+      return p;
     }
 
     setAsync(key, value) {
-      setTimeout(() => {
-        this.set(key, value);
-      });
+      setTimeout(() => this.set(key, value), 0);
     }
   }
 
